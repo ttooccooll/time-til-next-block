@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <style>
+            * {
+                box-sizing: border-box;
+                font-size: 1.15rem;
+                font-family: Arial, sans-serif;
+            }
+            html {
+                max-width: 70ch;
+                padding: 3rem 1rem;
+                margin: auto;
+                line-height: 1.25;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            input {
+                line-height: 1.25;
+                width: 100%;
+                height: 1.8rem;
+                font-size: 1.15rem;
+                border: 1px solid grey;
+            }
+            .ttnb_status {
+                margin-top: 1rem;
+            }
+            @media screen and (max-width: 600px) {
+            }
+        </style>
+        <script>
+            var $ = document.querySelector.bind( document );
+            var $$ = document.querySelectorAll.bind( document );
+            var url_params = new URLSearchParams( window.location.search );
+            var url_keys = url_params.keys();
+            var $_GET = {}
+            for ( var key of url_keys ) $_GET[ key ] = url_params.get( key );
+        </script>
+    </head>
+    <body>
+        <h1>Time Til Next Block</h1>
+        <div class="progress">
+            <div style="padding: 0; display: flex; justify-content: space-between;">
+                <div class="ttnb_probability" style="width: 90px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
+                <div class="ttnb_progressOutline" style="width: calc( 100% - 90px ); height: 2rem; border: 1px solid grey; border-radius: 25px; overflow: hidden; margin: 0;">
+                    <div class="ttnb_progressBar" style="height: 2rem; background-color: #61eb34; width: 0%; transition: width 1s linear;"></div>
+                </div>
+            </div>
+            <div class="ttnb_status"></div>
+        </div>
+        <div>
+            <h2>What is going on?</h2>
+            <p>
+                This is a bitcoin block time visualizer. In the world of bitcoin, users create lots of transactions every second, and bitcoin miners collect them together into batches called Blocks, which they then add to the blockchain. Getting your transaction into a block on the blockchain is called getting it settled. Transactions can be canceled until they are settled so wallets (especially merchant wallets) typically don't consider them "legit" until they see them settle. New blocks/confirmations happen *on average* every 10 minutes, but that number is not reliable, it's only an average. Typical times are a semi-random number of minutes between 1 and 60 and they average toward 10 *over time.*</p>
+            <p>
+                Bitcoiners who use their wallet daily (like myself) frequently find themselves "stuck" waiting for a transaction to settle, refreshing their wallet constantly, even when their wallet says to please not do that. Wallet developers struggle to find ways to inform users of what's happening in a way that feels like miners are making progress. Ordinary progress bars don't suffice here because they need a solid target, and the target here is an unknown number likely-but-not-necessarily between 1 and 60.
+            </p>
+            <p>
+                However, statistical analysis of the blockchain, as well as a bit of number theory, has allowed bitcoin researchers to glean some *hard numbers* about how long it usually takes miners to find blocks. I call the following set of hard numbers "milestones," and this progress bar counts progress toward them:
+            </p>
+            <h2>The milestones</h2>
+            <ol>
+                <li>09.52% of blocks are mined within 1 minute</li>
+                <li>18.13% of blocks are mined within 2 minutes</li>
+                <li>25.92% of blocks are mined within 3 minutes</li>
+                <li>32.97% of blocks are mined within 4 minutes</li>
+                <li>39.35% of blocks are mined within 5 minutes</li>
+                <li>45.12% of blocks are mined within 6 minutes</li>
+                <li>50.34% of blocks are mined within 7 minutes</li>
+                <li>55.07% of blocks are mined within 8 minutes</li>
+                <li>59.34% of blocks are mined within 9 minutes</li>
+                <li>63.21% of blocks are mined within 10 minutes</li>
+                <li>77.69% of blocks are mined within 15 minutes</li>
+                <li>95.02% of blocks are mined within 30 minutes</li>
+                <li>98.89% of blocks are mined within 45 minutes</li>
+                <li>99.75% of blocks are mined within 60 minutes</li>
+                <li>And so on</li>
+            </ol>
+            <p>
+                Since we have these hard numbers which nearly approach 100%, I made a progress bar out of them. The milestones also have nice round minute-numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block.
+            </p>
+            <h2>The formula</h2>
+            <p>
+                The milestones are based on the following formula: 1 - e^(-1)
+            </p>
+            <p>
+                The number -1 is what you modify to calculate the milestones. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on.
+            </p>
+        </div>
+
+        <script>
+            var data_source = "mempool.space";
+            function getData( url ) {
+                return new Promise( async function( resolve, reject ) {
+                    function inner_get( url ) {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.open( "GET", url, true );
+                        xhttp.send();
+                        return xhttp;
+                    }
+                    var data = inner_get( url );
+                    data.onerror = function( e ) {
+                        resolve( "error" );
+                    }
+                    async function isResponseReady() {
+                        return new Promise( function( resolve2, reject ) {
+                            if ( !data.responseText || data.readyState != 4 ) {
+                                setTimeout( async function() {
+                                    var msg = await isResponseReady();
+                                    resolve2( msg );
+                                }, 1 );
+                            } else {
+                                resolve2( data.responseText );
+                            }
+                        });
+                    }
+                    var returnable = await isResponseReady();
+                    resolve( returnable );
+                });
+            }
+            async function getBlockheight( network ) {
+                var data = await getData( `https://${data_source}/${network}api/blocks/tip/height` );
+                return Number( data );
+            }
+            var waitSomeSeconds = num => {
+                var num = num.toString() + "000";
+                num = Number( num );
+                return new Promise( resolve => setTimeout( resolve, num ) );
+            }
+            var lb_timestamp;
+            var first_time = true;
+            var status1;
+            var status2;
+            var chance, new_chance, chance_to_show;
+            var first_chance, first_num, first_text_1, first_text_2, first_text_minute_or_minutes;
+            var second_chance, second_num, second_text_1, second_text_2, second_text_minute_or_minutes;
+            var third_chance, third_num, third_text_1, third_text_2, third_text_minute_or_minutes;
+            var prevblock;
+            var new_block_found;
+            var next_already;
+            var timeTilNextBlock = async () => {
+                var last_block = await getBlockheight( "" );
+                if ( next_already ) last_block = last_block + 1;
+                if ( !prevblock ) prevblock = last_block;
+                if ( prevblock && prevblock != last_block ) {
+                    prevblock = last_block;
+                    new_block_found = true;
+                    var yay = true;
+                }
+                if ( first_time ) {
+                    var blockhash = await getData( `https://${data_source}/api/block-height/${last_block}` );
+                    var block_data = await getData( `https://${data_source}/api/block/${blockhash}` );
+                    block_data = JSON.parse( block_data );
+                    var block_timestamp = String( block_data[ "timestamp" ] );
+                }
+                var now = Math.floor( Date.now() / 1000 );
+                var last_two = Math.floor( Math.random() * 100 );
+                //TODO: fix problems that arise when block_timestamp is in the future
+                if ( !sessionStorage.lb_timestamp ) var timestamp = now;
+                if ( !sessionStorage.lb_timestamp ) sessionStorage.lb_timestamp = now - last_two;
+                if ( first_time ) sessionStorage.lb_timestamp = block_timestamp;
+                lb_timestamp = Number( sessionStorage.lb_timestamp );
+                var time_since_last_block = now - lb_timestamp;
+                if ( yay ) time_since_last_block = 0;
+                if ( yay ) sessionStorage.lb_timestamp = now;
+                var minute_we_are_in = Math.round( time_since_last_block / 60 );
+                var seconds_time = time_since_last_block % 60;
+                var seconds_til_we_switch = 60 - seconds_time;
+                var num_of_minutes = minute_we_are_in;
+                if ( num_of_minutes < 1 ) num_of_minutes = 1;
+                var num_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 1 ) );
+                var num_second_to_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 2, String( num_of_minutes ).length - 1 ) );
+                var num_ending = "th";
+                if ( num_last_num == 1 && num_second_to_last_num != 1 ) num_ending = "st";
+                if ( num_last_num == 2 && num_second_to_last_num != 1 ) num_ending = "nd";
+                if ( num_last_num == 3 && num_second_to_last_num != 1 ) num_ending = "rd";
+                var old_num_of_minutes = num_of_minutes - 1;
+                var advanced_num_of_minutes = num_of_minutes + 1;
+                new_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                var existing_chance = Number( $( '.ttnb_probability' ).innerText.substring( 0, $( '.ttnb_probability' ).innerText.length - 1 ) );
+                chance = Number( ( Math.round( ( 1 - Math.E ** -( old_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                if ( existing_chance != 0 && existing_chance != chance ) chance_to_show = new_chance;
+                else chance_to_show = chance;
+                var percentile = Number( Math.round( Number( ( 1 - ( chance_to_show / 100 ) ).toFixed( 2 ) ) * 100 ) );
+                var second_to_last_num = Number( String( percentile ).substring( String( percentile ).length - 2, String( percentile ).length - 1 ) );
+                var last_num = Number( String( percentile ).substring( String( percentile ).length - 1 ) );
+                var ending = "th";
+                if ( last_num == 1 && second_to_last_num != 1 ) ending = "st";
+                if ( last_num == 2 && second_to_last_num != 1 ) ending = "nd";
+                if ( last_num == 3 && second_to_last_num != 1 ) ending = "rd";
+                var advanced_chance = Number( ( Math.round( ( 1 - Math.E ** -( advanced_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                var advanced_percentile = Number( Math.round( Number( ( 1 - ( advanced_chance / 100 ) ).toFixed( 2 ) ) * 100 ) );
+                var advanced_last_num = Number( String( advanced_percentile ).substring( String( advanced_percentile ).length - 1 ) );
+                var advanced_second_to_last_num = Number( String( advanced_percentile ).substring( String( advanced_percentile ).length - 2, String( advanced_percentile ).length - 1 ) );
+                var advanced_ending = "th";
+                if ( advanced_last_num == 1 && advanced_second_to_last_num != 1 ) advanced_ending = "st";
+                if ( advanced_last_num == 2 && advanced_second_to_last_num != 1 ) advanced_ending = "nd";
+                if ( advanced_last_num == 3 && advanced_second_to_last_num != 1 ) advanced_ending = "rd";
+                var first_num_of_minutes = num_of_minutes - 1;
+                var second_num_of_minutes = num_of_minutes;
+                var third_num_of_minutes = num_of_minutes + 1;
+                var real_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                if ( real_chance < 9.52 ) real_chance = 9.52;
+                first_chance = Number( ( Math.round( ( 1 - Math.E ** -( old_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                first_num = old_num_of_minutes;
+                var first_text_minute_or_minutes = "minutes";
+                if ( first_num == 1 ) first_text_minute_or_minutes = "minute";
+                second_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                second_num = num_of_minutes;
+                var second_text_minute_or_minutes = "minutes";
+                if ( second_num == 1 ) second_text_minute_or_minutes = "minute";
+                third_chance = Number( ( Math.round( ( 1 - Math.E ** -( advanced_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                third_num = advanced_num_of_minutes;
+                if ( chance_to_show < 9.52 ) chance_to_show = 9.52
+                var third_text_minute_or_minutes = "minutes";
+                if ( third_num == 1 ) third_text_minute_or_minutes = "minute";
+                var num_to_show = second_num_of_minutes;
+                if ( real_chance < chance_to_show ) var num_to_show = third_num_of_minutes;
+                if ( real_chance > chance_to_show ) var num_to_show = first_num_of_minutes;
+                var minute_or_minutes = "minutes";
+                if ( num_to_show == 1 ) minute_or_minutes = "minute";
+                status1 = `There is a chance of ${chance_to_show}% a block is found`;
+                status2 = `miners will have sought a block for ${num_to_show} ${minute_or_minutes}, and the chance of them finding a block in ${num_to_show} ${minute_or_minutes} is ${chance_to_show}%.`;
+                first_text_1 = `There is a chance of ${first_chance}% a block is found`;
+                first_text_2 = `miners will have sought a block for ${first_num} ${first_text_minute_or_minutes}, and the chance of them finding a block in ${first_num} ${first_text_minute_or_minutes} is ${first_chance}%.`;
+                second_text_1 = `There is a chance of ${second_chance}% a block is found`;
+                second_text_2 = `miners will have sought a block for ${second_num} ${second_text_minute_or_minutes}, and the chance of them finding a block in ${second_num} ${second_text_minute_or_minutes} is ${second_chance}%.`;
+                third_text_1 = `There is a chance of ${third_chance}% a block is found`;
+                third_text_2 = `miners will have sought a block for ${third_num} ${third_text_minute_or_minutes}, and the chance of them finding a block in ${third_num} ${third_text_minute_or_minutes} is ${third_chance}%.`;
+                if ( first_time ) $( '.ttnb_status' ).innerHTML = `<p class="status1">${status1} within ${seconds_til_we_switch} seconds</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${status2}</span></p>`;
+                if ( first_time ) $( '.ttnb_probability' ).innerText = chance_to_show + "%";
+                first_time = false;
+                await waitSomeSeconds( 1 );
+                timeTilNextBlock();
+            }
+            timeTilNextBlock();
+            var smoothProgress = async () => {
+                if ( lb_timestamp ) {
+                    var now = Math.floor( Date.now() / 1000 );
+                    var time_since_last_block = Math.abs( now - lb_timestamp );
+                    var seconds_time = time_since_last_block % 60;
+                    var seconds_til_we_switch = 60 - seconds_time;
+                    var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
+                    $( '.ttnb_progressBar' ).style.width = `${progress}%`;
+                    if ( !seconds_time ) {
+                        var text_to_use_1 = status1;
+                        var text_to_use_2 = status2;
+                        var existing_chance = Number( $( '.ttnb_probability' ).innerText.substring( 0, $( '.ttnb_probability' ).innerText.length - 1 ) );
+                        if ( existing_chance == first_chance ) {
+                            var text_to_use_1 = second_text_1;
+                            var text_to_use_2 = second_text_2;
+                            var chance_to_use = second_chance;
+                        }
+                        if ( existing_chance == second_chance ) {
+                            var text_to_use_1 = third_text_1;
+                            var text_to_use_2 = third_text_2;
+                            var chance_to_use = third_chance;
+                        }
+                        if ( existing_chance != first_chance && existing_chance != second_chance ) {
+                            var text_to_use_1 = first_text_1;
+                            var text_to_use_2 = first_text_2;
+                            var chance_to_use = first_chance;
+                        }
+                        if ( new_block_found ) {
+                            new_block_found = false;
+                            var text_to_use_1 = `There is a chance of 9.52% a block is found`;
+                            var text_to_use_2 = `miners will have sought a block for 1 minute, and the chance of them finding a block in 1 minute is 9.52%.`;
+                            var chance_to_use = 9.52;
+                        }
+                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${text_to_use_1} within ${seconds_til_we_switch} seconds</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${text_to_use_2}</span></p>`;
+                        $( '.ttnb_probability' ).innerText = chance_to_use + "%";
+                    } else {
+                        var mystatus1 = $( '.status1' ).innerText.substring( 0, $( '.status1' ).innerText.indexOf( " within" ) );
+                        var mystatus2 = $( '.status2' ).innerText;
+                        if ( new_block_found ) {
+                            new_block_found = false;
+                            var mystatus1 = `There is a chance of 9.52% a block is found`;
+                            var mystatus2 = `miners will have sought a block for 1 minute, and the chance of them finding a block in 1 minute is 9.52%.`;
+                            $( '.ttnb_probability' ).innerText = "9.52%";
+                        }
+                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${mystatus1} within ${seconds_til_we_switch} seconds</p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${mystatus2}</span></p>`;
+                    }
+                }
+                await waitSomeSeconds( 1 );
+                smoothProgress();
+            }
+            smoothProgress();
+        </script>
+    </body>
+</html>
