@@ -153,6 +153,7 @@
             var prevblock;
             var new_block_found;
             var next_already;
+            var prev_num = null;
             var timeTilNextBlock = async () => {
                 var last_block = await getBlockheight( "" );
                 if ( next_already ) last_block = last_block + 1;
@@ -180,6 +181,7 @@
                 if ( yay ) sessionStorage.lb_timestamp = now;
                 var minute_we_are_in = Math.ceil( time_since_last_block / 60 );
                 if ( minute_we_are_in <= 7 ) minute_we_are_in = 7;
+                if ( minute_we_are_in <= 7 ) prev_num = 7;
                 if ( minute_we_are_in <= 7 ) var seconds_time = time_since_last_block % ( 60 * 7 );
                 else var seconds_time = time_since_last_block % 60;
                 if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
@@ -295,6 +297,12 @@
                             var text_to_use_2 = first_text_2;
                             var chance_to_use = first_chance;
                         }
+                        if ( prev_num == 7 && minute_we_are_in == 8 ) {
+                            prev_num = null;
+                            var text_to_use_1 = `There is a chance of 55.07% a block is found`;
+                            var text_to_use_2 = `miners will have sought a block for 8 minutes, and the chance of them finding a block in 8 minutes is 55.07%.`;
+                            var chance_to_use = 55.07;                            
+                        }
                         if ( minute_we_are_in <= 7 ) {
                             var text_to_use_1 = `There is a chance of 50.34% a block is found`;
                             var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
@@ -317,10 +325,16 @@
                             var mystatus2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minute is 50.34%.`;
                             $( '.ttnb_probability' ).innerText = "50.34%";
                         }
+                        if ( prev_num == 7 && minute_we_are_in == 8 ) {
+                            prev_num = null;
+                            var text_to_use_1 = `There is a chance of 55.07% a block is found`;
+                            var text_to_use_2 = `miners will have sought a block for 8 minutes, and the chance of them finding a block in 8 minutes is 55.07%.`;
+                            $( '.ttnb_probability' ).innerText = "55.07%";
+                        }
                         if ( minute_we_are_in <= 7 ) {
-                            var text_to_use_1 = `There is a chance of 50.34% a block is found`;
-                            var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
-                            var chance_to_use = 50.34;
+                            var mystatus1 = `There is a chance of 50.34% a block is found`;
+                            var mystatus2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
+                            $( '.ttnb_probability' ).innerText = "50.34%";
                         }
                         $( '.ttnb_status' ).innerHTML = `<p class="status1">${mystatus1} within ${seconds_til_we_switch} seconds</p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${mystatus2}</span></p>`;
                     }
