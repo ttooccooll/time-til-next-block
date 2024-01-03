@@ -185,6 +185,7 @@
                 if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
                 else var seconds_til_we_switch = 60 - seconds_time;
                 seconds_til_we_switch = convertHMS( seconds_til_we_switch );
+                if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = 60;
                 var num_of_minutes = minute_we_are_in;
                 if ( num_of_minutes <= 7 ) num_of_minutes = 7;
                 var num_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 1 ) );
@@ -236,9 +237,9 @@
                 var third_text_minute_or_minutes = "minutes";
                 if ( third_num == 1 ) third_text_minute_or_minutes = "minute";
                 var num_to_show = second_num_of_minutes;
-                if ( num_to_show <= 7 ) num_to_show = 7;
                 if ( real_chance < chance_to_show ) var num_to_show = third_num_of_minutes;
                 if ( real_chance > chance_to_show ) var num_to_show = first_num_of_minutes;
+                if ( num_to_show <= 7 ) num_to_show = 7;
                 if ( chance_to_show <= 50.34 ) chance_to_show = 50.34;
                 if ( first_num <= 7 ) first_num = 7;
                 if ( second_num <= 7 ) second_num = 7;
@@ -271,6 +272,7 @@
                     if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
                     else var seconds_til_we_switch = 60 - seconds_time;
                     seconds_til_we_switch = convertHMS( seconds_til_we_switch );
+                    if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = 60;
                     if ( minute_we_are_in <= 7 ) var progress = Number( ( ( seconds_time / ( 60 * 7 ) ) * 100 ).toFixed( 2 ) );
                     else var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
                     $( '.ttnb_progressBar' ).style.width = `${progress}%`;
