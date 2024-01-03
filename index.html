@@ -187,7 +187,8 @@
                 if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
                 else var seconds_til_we_switch = 60 - seconds_time;
                 seconds_til_we_switch = convertHMS( seconds_til_we_switch );
-                if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = 60;
+                seconds_til_we_switch = String( seconds_til_we_switch );
+                if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = "60";
                 var num_of_minutes = minute_we_are_in;
                 if ( num_of_minutes <= 7 ) num_of_minutes = 7;
                 var num_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 1 ) );
@@ -249,7 +250,7 @@
                 var minute_or_minutes = "minutes";
                 if ( num_to_show == 1 ) minute_or_minutes = "minute";
                 var secondsstring = "seconds";
-                if ( seconds_til_we_switch.endsWith( " 1" ) ) secondsstring = "second";
+                if ( seconds_til_we_switch.endsWith( " 1" ) || seconds_til_we_switch == "1" ) secondsstring = "second";
                 status1 = `There is a chance of ${chance_to_show}% a block is found`;
                 status2 = `miners will have sought a block for ${num_to_show} ${minute_or_minutes}, and the chance of them finding a block in ${num_to_show} ${minute_or_minutes} is ${chance_to_show}%.`;
                 first_text_1 = `There is a chance of ${first_chance}% a block is found`;
@@ -276,9 +277,10 @@
                     if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
                     else var seconds_til_we_switch = 60 - seconds_time;
                     seconds_til_we_switch = convertHMS( seconds_til_we_switch );
-                    if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = 60;
+                    seconds_til_we_switch = String( seconds_til_we_switch );
+                    if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = "60";
                     var secondsstring = "seconds";
-                    if ( seconds_til_we_switch.endsWith( " 1" ) ) secondsstring = "second";
+                    if ( seconds_til_we_switch.endsWith( " 1" ) || seconds_til_we_switch == "1" ) secondsstring = "second";
                     if ( minute_we_are_in <= 7 ) var progress = Number( ( ( seconds_time / ( 60 * 7 ) ) * 100 ).toFixed( 2 ) );
                     else var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
                     $( '.ttnb_progressBar' ).style.width = `${progress}%`;
