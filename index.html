@@ -248,6 +248,8 @@
                 if ( third_num <= 7 ) third_num = 7;
                 var minute_or_minutes = "minutes";
                 if ( num_to_show == 1 ) minute_or_minutes = "minute";
+                var secondsstring = "seconds";
+                if ( seconds_til_we_switch.endsWith( " 1" ) ) secondsstring = "second";
                 status1 = `There is a chance of ${chance_to_show}% a block is found`;
                 status2 = `miners will have sought a block for ${num_to_show} ${minute_or_minutes}, and the chance of them finding a block in ${num_to_show} ${minute_or_minutes} is ${chance_to_show}%.`;
                 first_text_1 = `There is a chance of ${first_chance}% a block is found`;
@@ -256,7 +258,7 @@
                 second_text_2 = `miners will have sought a block for ${second_num} ${second_text_minute_or_minutes}, and the chance of them finding a block in ${second_num} ${second_text_minute_or_minutes} is ${second_chance}%.`;
                 third_text_1 = `There is a chance of ${third_chance}% a block is found`;
                 third_text_2 = `miners will have sought a block for ${third_num} ${third_text_minute_or_minutes}, and the chance of them finding a block in ${third_num} ${third_text_minute_or_minutes} is ${third_chance}%.`;
-                if ( first_time ) $( '.ttnb_status' ).innerHTML = `<p class="status1">${status1} within ${seconds_til_we_switch} seconds</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${status2}</span></p>`;
+                if ( first_time ) $( '.ttnb_status' ).innerHTML = `<p class="status1">${status1} within ${seconds_til_we_switch} ${secondsstring}</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${status2}</span></p>`;
                 if ( first_time ) $( '.ttnb_probability' ).innerText = chance_to_show + "%";
                 first_time = false;
                 await waitSomeSeconds( 1 );
@@ -275,6 +277,8 @@
                     else var seconds_til_we_switch = 60 - seconds_time;
                     seconds_til_we_switch = convertHMS( seconds_til_we_switch );
                     if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = 60;
+                    var secondsstring = "seconds";
+                    if ( seconds_til_we_switch.endsWith( " 1" ) ) secondsstring = "second";
                     if ( minute_we_are_in <= 7 ) var progress = Number( ( ( seconds_time / ( 60 * 7 ) ) * 100 ).toFixed( 2 ) );
                     else var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
                     $( '.ttnb_progressBar' ).style.width = `${progress}%`;
@@ -314,7 +318,7 @@
                             var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
                             var chance_to_use = 50.34;
                         }
-                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${text_to_use_1} within ${seconds_til_we_switch} seconds</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${text_to_use_2}</span></p>`;
+                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${text_to_use_1} within ${seconds_til_we_switch} ${secondsstring}</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${text_to_use_2}</span></p>`;
                         $( '.ttnb_probability' ).innerText = chance_to_use + "%";
                     } else {
                         var mystatus1 = $( '.status1' ).innerText.substring( 0, $( '.status1' ).innerText.indexOf( " within" ) );
@@ -336,7 +340,7 @@
                             var mystatus2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
                             $( '.ttnb_probability' ).innerText = "50.34%";
                         }
-                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${mystatus1} within ${seconds_til_we_switch} seconds</p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${mystatus2}</span></p>`;
+                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${mystatus1} within ${seconds_til_we_switch} ${secondsstring}</p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${mystatus2}</span></p>`;
                     }
                 }
                 await waitSomeSeconds( 1 );
