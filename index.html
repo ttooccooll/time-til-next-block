@@ -66,12 +66,6 @@
             </p>
             <h2>The milestones</h2>
             <ol>
-                <li>09.52% of blocks are mined within 1 minute</li>
-                <li>18.13% of blocks are mined within 2 minutes</li>
-                <li>25.92% of blocks are mined within 3 minutes</li>
-                <li>32.97% of blocks are mined within 4 minutes</li>
-                <li>39.35% of blocks are mined within 5 minutes</li>
-                <li>45.12% of blocks are mined within 6 minutes</li>
                 <li>50.34% of blocks are mined within 7 minutes</li>
                 <li>55.07% of blocks are mined within 8 minutes</li>
                 <li>59.34% of blocks are mined within 9 minutes</li>
@@ -170,10 +164,13 @@
                 if ( yay ) time_since_last_block = 0;
                 if ( yay ) sessionStorage.lb_timestamp = now;
                 var minute_we_are_in = Math.round( time_since_last_block / 60 );
-                var seconds_time = time_since_last_block % 60;
-                var seconds_til_we_switch = 60 - seconds_time;
+                if ( minute_we_are_in <= 7 ) minute_we_are_in = 7;
+                if ( minute_we_are_in <= 7 ) var seconds_time = time_since_last_block % ( 60 * 7 );
+                else var seconds_time = time_since_last_block % 60;
+                if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
+                else var seconds_til_we_switch = 60 - seconds_time;
                 var num_of_minutes = minute_we_are_in;
-                if ( num_of_minutes < 1 ) num_of_minutes = 1;
+                if ( num_of_minutes <= 7 ) num_of_minutes = 7;
                 var num_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 1 ) );
                 var num_second_to_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 2, String( num_of_minutes ).length - 1 ) );
                 var num_ending = "th";
@@ -183,8 +180,10 @@
                 var old_num_of_minutes = num_of_minutes - 1;
                 var advanced_num_of_minutes = num_of_minutes + 1;
                 new_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                if ( num_of_minutes < 5 ) new_chance = 50.34;
                 var existing_chance = Number( $( '.ttnb_probability' ).innerText.substring( 0, $( '.ttnb_probability' ).innerText.length - 1 ) );
                 chance = Number( ( Math.round( ( 1 - Math.E ** -( old_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                if ( num_of_minutes < 5 ) chance = 50.34;
                 if ( existing_chance != 0 && existing_chance != chance ) chance_to_show = new_chance;
                 else chance_to_show = chance;
                 var percentile = Number( Math.round( Number( ( 1 - ( chance_to_show / 100 ) ).toFixed( 2 ) ) * 100 ) );
@@ -221,8 +220,13 @@
                 var third_text_minute_or_minutes = "minutes";
                 if ( third_num == 1 ) third_text_minute_or_minutes = "minute";
                 var num_to_show = second_num_of_minutes;
+                if ( num_to_show <= 7 ) num_to_show = 7;
                 if ( real_chance < chance_to_show ) var num_to_show = third_num_of_minutes;
                 if ( real_chance > chance_to_show ) var num_to_show = first_num_of_minutes;
+                if ( chance_to_show <= 50.34 ) chance_to_show = 50.34;
+                if ( first_num <= 7 ) first_num = 7;
+                if ( second_num <= 7 ) second_num = 7;
+                if ( third_num <= 7 ) third_num = 7;
                 var minute_or_minutes = "minutes";
                 if ( num_to_show == 1 ) minute_or_minutes = "minute";
                 status1 = `There is a chance of ${chance_to_show}% a block is found`;
@@ -244,9 +248,14 @@
                 if ( lb_timestamp ) {
                     var now = Math.floor( Date.now() / 1000 );
                     var time_since_last_block = Math.abs( now - lb_timestamp );
-                    var seconds_time = time_since_last_block % 60;
-                    var seconds_til_we_switch = 60 - seconds_time;
-                    var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
+                    var minute_we_are_in = Math.round( time_since_last_block / 60 );
+                    if ( minute_we_are_in <= 7 ) minute_we_are_in = 7;
+                    if ( minute_we_are_in <= 7 ) var seconds_time = time_since_last_block % ( 60 * 7 );
+                    else var seconds_time = time_since_last_block % 60;
+                    if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
+                    else var seconds_til_we_switch = 60 - seconds_time;
+                    if ( minute_we_are_in <= 7 ) var progress = Number( ( ( seconds_time / ( 60 * 7 ) ) * 100 ).toFixed( 2 ) );
+                    else var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
                     $( '.ttnb_progressBar' ).style.width = `${progress}%`;
                     if ( !seconds_time ) {
                         var text_to_use_1 = status1;
@@ -267,11 +276,16 @@
                             var text_to_use_2 = first_text_2;
                             var chance_to_use = first_chance;
                         }
+                        if ( minute_we_are_in <= 7 ) {
+                            var text_to_use_1 = `There is a chance of 50.34% a block is found`;
+                            var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
+                            var chance_to_use = 50.34;
+                        }
                         if ( new_block_found ) {
                             new_block_found = false;
-                            var text_to_use_1 = `There is a chance of 9.52% a block is found`;
-                            var text_to_use_2 = `miners will have sought a block for 1 minute, and the chance of them finding a block in 1 minute is 9.52%.`;
-                            var chance_to_use = 9.52;
+                            var text_to_use_1 = `There is a chance of 50.34% a block is found`;
+                            var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
+                            var chance_to_use = 50.34;
                         }
                         $( '.ttnb_status' ).innerHTML = `<p class="status1">${text_to_use_1} within ${seconds_til_we_switch} seconds</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${text_to_use_2}</span></p>`;
                         $( '.ttnb_probability' ).innerText = chance_to_use + "%";
@@ -280,9 +294,14 @@
                         var mystatus2 = $( '.status2' ).innerText;
                         if ( new_block_found ) {
                             new_block_found = false;
-                            var mystatus1 = `There is a chance of 9.52% a block is found`;
-                            var mystatus2 = `miners will have sought a block for 1 minute, and the chance of them finding a block in 1 minute is 9.52%.`;
-                            $( '.ttnb_probability' ).innerText = "9.52%";
+                            var mystatus1 = `There is a chance of 50.34% a block is found`;
+                            var mystatus2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minute is 50.34%.`;
+                            $( '.ttnb_probability' ).innerText = "50.34%";
+                        }
+                        if ( minute_we_are_in <= 7 ) {
+                            var text_to_use_1 = `There is a chance of 50.34% a block is found`;
+                            var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
+                            var chance_to_use = 50.34;
                         }
                         $( '.ttnb_status' ).innerHTML = `<p class="status1">${mystatus1} within ${seconds_til_we_switch} seconds</p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${mystatus2}</span></p>`;
                     }
