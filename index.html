@@ -31,6 +31,52 @@
             .ttnb_status {
                 margin-top: 1rem;
             }
+            .toast {
+              box-sizing: border-box;
+              visibility: hidden;
+              width: 250px;
+              margin-left: -125px;
+              background-color: rgb(97, 235, 52);
+              color: white;
+              text-align: center;
+              border-radius: 2px;
+              padding: 16px;
+              position: fixed;
+              z-index: 1;
+              left: 50%;
+              bottom: 30px;
+            }
+
+            .toast.show {
+                visibility: visible;
+                -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            }
+
+            @-webkit-keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+            }
+
+            @keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+            }
+
+            @-webkit-keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+            }
+
+            @keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+            }
+            .plaid {
+                background-color: red;
+                background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.2) 15px, rgba(255, 255, 255, 0.2) 30px), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255,255,255,0.4) 15px, rgba(255,255,255,0.4) 30px);
+                background-attachment: fixed;
+            }
             @media screen and (max-width: 600px) {
             }
         </style>
@@ -41,32 +87,60 @@
             var url_keys = url_params.keys();
             var $_GET = {}
             for ( var key of url_keys ) $_GET[ key ] = url_params.get( key );
+            var spheres =   [ 10, 25,   50,     75,     90,     95,     97.5, 99,   101 ];
+            var tiers =     [ 64, 173, 416,     832,    1382,   1797,   2214, 2766, 100_000_000_000 ];
+            //99 = 2766
+            //97.5 = 2214
+            //95% = 1797
+            //90% = 1382
+            //75% = 832
+            //50% = 416
+            //25% = 173
+            //10% = 63
+            //I found these numbers by using this formula: Number( ( Math.round( ( 1 - Math.E ** -( time_in_seconds / ( 10 * 60 ) ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+            //and plugging random things into time_in_seconds til it came out just above the percent I sought
         </script>
     </head>
     <body>
         <h1>Time Til Next Block</h1>
+        <p><span style="font-weight: bold;">Last block: </span><span class="last_block">loading...</span></p>
         <div class="progress">
             <div style="padding: 0; display: flex; justify-content: space-between;">
                 <div class="ttnb_probability" style="width: 90px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
-                <div class="ttnb_progressOutline" style="width: calc( 100% - 90px ); height: 2rem; border: 1px solid grey; border-radius: 25px; overflow: hidden; margin: 0;">
+                <div class="ttnb_progressOutline" style="width: calc( 100% - 90px ); height: 2rem; border: 1px solid grey; border-radius: 25px; overflow: hidden; margin: 0; margin-left: 0.5rem;">
                     <div class="ttnb_progressBar" style="height: 2rem; background-color: #61eb34; width: 0%; transition: width 1s linear;"></div>
                 </div>
             </div>
             <div class="ttnb_status"></div>
         </div>
         <div>
+            <p><span style="font-weight: bold;">Percent of blocks found by now: </span><span class="current_percent">loading...</span></p>
+            <p><span style="font-weight: bold;">Next tier: </span><span class="ttnt">loading...</span></p>
+            <p><span style="font-weight: bold;">More info: </span><span class="tier_info">loading...</span></p>
             <h2>What is going on?</h2>
             <p>
-                This is a bitcoin block time visualizer. In the world of bitcoin, users create lots of transactions every second, and bitcoin miners collect them together into batches called Blocks, which they then add to the blockchain. Getting your transaction into a block on the blockchain is called getting it settled. Transactions can be canceled until they are settled so wallets (especially merchant wallets) typically don't consider them "legit" until they see them settle. New blocks/confirmations happen *on average* every 10 minutes, but that number is not reliable, it's only an average. Typical times are a semi-random number of minutes between 1 and 60 and they average toward 10 *over time.*</p>
+                This is a bitcoin block time visualizer. In the world of bitcoin, users create lots of transactions every second, and bitcoin miners collect them together into batches called blocks, which they then add to the blockchain. Getting your transaction into a block on the blockchain is called getting it settled. Transactions can be canceled until they are settled so wallets (especially merchant wallets) typically don't consider them "legit" until they see them settle. New blocks/settlements happen *on average* every 10 minutes, but that number is not reliable, it's only an average. Typical times are a semi-random number of minutes between 1 and 60 and they average toward 10 *over time.*</p>
             <p>
                 Bitcoiners who use their wallet daily (like myself) frequently find themselves "stuck" waiting for a transaction to settle, refreshing their wallet constantly, even when their wallet says to please not do that. Wallet developers struggle to find ways to inform users of what's happening in a way that feels like miners are making progress. Ordinary progress bars don't suffice here because they need a solid target, and the target here is an unknown number likely-but-not-necessarily between 1 and 60.
             </p>
             <p>
-                However, statistical analysis of the blockchain, as well as a bit of number theory, has allowed bitcoin researchers to glean some *hard numbers* about how long it usually takes miners to find blocks. I call the following set of hard numbers "milestones," and this progress bar counts progress toward them:
+                However, statistical analysis of the blockchain, as well as a bit of number theory, has allowed bitcoin researchers to glean some *hard numbers* about how long it usually takes miners to find blocks. I call the following set of hard numbers "tiers," and this progress bar counts progress toward them:
             </p>
-            <h2>The milestones</h2>
+            <h2>The tiers</h2>
             <ol>
-                <li>50.34% of blocks are mined within 7 minutes</li>
+                <li>10% of blocks are mined within 1 minute 4 seconds</li>
+                <li>25% of blocks are mined within 2 minutes 53 seconds</li>
+                <li>50% of blocks are mined within 6 minutes 56 seconds</li>
+                <li>75% of blocks are mined within 13 minutes 52 seconds</li>
+                <!-- <li>77.69% of blocks are mined within 15 minutes</li>                 -->
+                <li>90% of blocks are mined within 23 minutes 2 seconds</li>
+                <li>95% of blocks are mined within 29 minutes 56 seconds</li>
+                <li>97.5% of blocks are mined within 36 minutes 53 seconds</li>
+                <!-- <li>98.89% of blocks are mined within 45 minutes</li> -->
+                <li>99% of blocks are mined within 46 minutes 6 seconds</li>
+                <!-- <li>99.75% of blocks are mined within 60 minutes</li> -->
+                <li>And so on</li>
+<!--            <li>50.34% of blocks are mined within 7 minutes</li>
                 <li>55.07% of blocks are mined within 8 minutes</li>
                 <li>59.34% of blocks are mined within 9 minutes</li>
                 <li>63.21% of blocks are mined within 10 minutes</li>
@@ -74,17 +148,18 @@
                 <li>95.02% of blocks are mined within 30 minutes</li>
                 <li>98.89% of blocks are mined within 45 minutes</li>
                 <li>99.75% of blocks are mined within 60 minutes</li>
-                <li>And so on</li>
+                <li>And so on</li> -->
             </ol>
             <p>
-                Since we have these hard numbers which nearly approach 100%, I made a progress bar out of them. The milestones also have nice round minute-numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block.
+                <!-- Since we have these hard numbers which nearly approach 100%, I made a progress bar out of them. The milestones also have nice round minute-numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block. -->
+                Since we have these hard numbers which nearly approach 100%, I made progress bars out of them. The tiers also have minute-and-second numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block.
             </p>
             <h2>The formula</h2>
             <p>
-                The milestones are based on the following formula: 1 - e^(-1)
+                The tiers are based on the following formula: 1 - e^(-1)
             </p>
             <p>
-                The number -1 is what you modify to calculate the milestones. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on.
+                The number -1 is what you modify to calculate the tiers. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on. To get the formula to give me "round percentages" I made this javascript version: ( 1 - Math.E**(-num_of_seconds / ( 10 * 60 ) ) ) * 100 -- and I modify the variable num_of_seconds til I get a percentage like 10% or 25% or whatever I want.
             </p>
         </div>
 
@@ -122,6 +197,61 @@
                 var data = await getData( `https://${data_source}/${network}api/blocks/tip/height` );
                 return Number( data );
             }
+            async function getAllTransactionsInBlock( blockhash ) {
+                var all_txs_in_block = [];
+                var block_info = await getData( `https://mempool.space/api/block/${blockhash}` );
+                var tx_count = JSON.parse( block_info )[ "tx_count" ];
+                var num_of_pages = Math.ceil( tx_count / 25 );
+                var i; for ( i=0; i<num_of_pages; i++ ) {
+                    console.log( `${i} of ${num_of_pages}` );
+                    var num = i*25;
+                    var url = `https://mempool.space/api/block/${blockhash}/txs/${String( num )}`;
+                    var txs = await getData( url );
+                    txs = JSON.parse( txs );
+                    txs.forEach( tx => all_txs_in_block.push( tx ) );
+                    if ( i == num_of_pages - 1 ) return all_txs_in_block;
+                }
+            }
+            var getFeeInfo = async blockhash => {
+                var fees = [];
+                // var weights = [];
+                var txs = await getAllTransactionsInBlock( "00000000000000000001ee52b067dd630d96313f2bd2b8f2a6b9277600753181" )
+                txs.forEach( item => fees.push( Number( ( item.fee / item.weight ).toFixed( 2 ) ) ) );
+                // txs.forEach( item => weights.push( item.weight ) );
+                fees.sort()
+                var sum_of_fees = 0;
+                fees.forEach( item => sum_of_fees = sum_of_fees + item );
+                var sum_of_weights = 0;
+                // weights.forEach( item => sum_of_weights = sum_of_weights + item );
+                var average_fee = Number( ( sum_of_fees / fees.length ).toFixed( 2 ) );
+                // var average_weight = Number( ( sum_of_weights / weights.length ).toFixed( 2 ) );
+                if ( fees.length % 2 ) var median_fee = fees[ Math.ceil( fees.length / 2 ) ];
+                else var median_fee = ( fees[ fees.length / 2 ] + fees[ ( fees.length / 2 ) + 1 ] ) / 2;
+                console.log( "average fee:", average_fee, "median fee:", median_fee );
+                console.log( `every tx that paid a feerate of more than ${average_fee} sats per byte should have gotten into this block because it paid an above-average fee` );
+                //I want to find out where someone's tx is *in an upcoming block* so I need to do this for the upcoming block *template* as depicted by mempool.space
+                //looks like this page is helpful: https://mempool.space/api/v1/fees/mempool-blocks
+                //and this explainer: https://github.com/Blockstream/esplora/issues/262
+                //it looks like, to determine an estimate for when a tx is likely to get into a block, they follow this procedure:
+                //use this api endpoint: https://mempool.space/api/fee-estimates
+                //which, according to this explainer: https://github.com/Blockstream/esplora/blob/master/API.md#get-fee-estimates, has
+                //target prices for getting into various blocks. For example, right now it says this:
+                //{"4":171.927,"14":163.59,"10":171.927,"13":163.59,"7":171.927,"11":171.927,"15":163.59,"3":230.96200000000002,"6":171.927,"8":171.927,"16":163.59,"18":163.59,"19":163.59,"17":163.59,"5":171.927,"22":163.59,"24":163.59,"144":68.09700000000001,"1":230.96200000000002,"21":163.59,"1008":37.802,"25":82.557,"9":171.927,"2":230.96200000000002,"12":171.927,"20":163.59,"23":163.59,"504":55.702}
+                //which apparently means: if you want to get into blocks "1", "2", or "3", pay at least 230.96200000000002 sats per byte. If you want to get into blocks 4-12, pay 171.927 sats per byte. To get into blocks 13-24, pay 163.59 sats per byte. To get into block 25, pay 82.557 sats per byte. To get into block 144, pay 68.097 sats per byte. To get into block 504, pay 55.702 sats per byte. And to get into block 1008, pay 37.802 sats per byte.
+                //With that info in hand, it looks for the highest number that is "below" your transaction's sats_per_byte value. 
+                //I suspect the upcoming block template is based on the "fee histogram" field found here: https://mempool.space/api/mempool
+                //and explained here: https://github.com/Blockstream/esplora/blob/master/API.md#get-mempool
+                //Each entry in that field seems to be an array with two values. The first value is a sats_per_byte value and the
+                //second value is "the total vsize of transactions paying more than [that] feerate but less than the previous entry's feerate"
+                //but I find that confusing. Right now the fee histogram says: "fee_histogram":[[232.65,50808],[182.0922,50060]...]
+                //that *seems to mean* there are 50060 vbytes worth of transactions paying 232.65 sats per byte or more. Assuming 4 megabytes
+                //per block, that seems to imply there are enough transactions paying that feerate to fill the next 12,515 blocks. And yet,
+                //the "recommended fees" right now are only 47 sats per byte to get into the next block: https://mempool.space/api/v1/fees/recommended
+                //I wonder what will happen if I find the entry whose second value is closest to 4000
+                //if I get that info, their txfee doesn't need to be *above average* -- just above the minimum fee in that block template
+                //perhaps I can also estimate whether their tx is likely to be pushed out of the block before it is mined by finding out how
+                //many txs *beating yours* were added to the mempool during the last 30 seconds and extrapolating from that data
+            }
             var waitSomeSeconds = num => {
                 var num = num.toString() + "000";
                 num = Number( num );
@@ -142,6 +272,17 @@
                 if ( seconds == 0 ) return `${seconds}`;
                 return `${seconds}`;
             }
+            var findSphere = percent => {
+                var next;
+                spheres.every( item => {
+                    if ( item > percent ) {
+                        next = item;
+                        return;
+                    }
+                    return true;
+                });
+                return spheres.indexOf( next );
+            }
             var lb_timestamp;
             var first_time = true;
             var status1;
@@ -154,8 +295,11 @@
             var new_block_found;
             var next_already;
             var prev_num = null;
+            var time_in_seconds;
+            var current_percent;
             var timeTilNextBlock = async () => {
                 var last_block = await getBlockheight( "" );
+                $( '.last_block' ).innerText = last_block;
                 if ( next_already ) last_block = last_block + 1;
                 if ( !prevblock ) prevblock = last_block;
                 if ( prevblock && prevblock != last_block ) {
@@ -179,88 +323,6 @@
                 var time_since_last_block = now - lb_timestamp;
                 if ( yay ) time_since_last_block = 0;
                 if ( yay ) sessionStorage.lb_timestamp = now;
-                var minute_we_are_in = Math.ceil( time_since_last_block / 60 );
-                if ( minute_we_are_in <= 7 ) minute_we_are_in = 7;
-                if ( minute_we_are_in <= 7 ) prev_num = 7;
-                if ( minute_we_are_in <= 7 ) var seconds_time = time_since_last_block % ( 60 * 7 );
-                else var seconds_time = time_since_last_block % 60;
-                if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
-                else var seconds_til_we_switch = 60 - seconds_time;
-                seconds_til_we_switch = convertHMS( seconds_til_we_switch );
-                seconds_til_we_switch = String( seconds_til_we_switch );
-                if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = "60";
-                var num_of_minutes = minute_we_are_in;
-                if ( num_of_minutes <= 7 ) num_of_minutes = 7;
-                var num_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 1 ) );
-                var num_second_to_last_num = Number( String( num_of_minutes ).substring( String( num_of_minutes ).length - 2, String( num_of_minutes ).length - 1 ) );
-                var num_ending = "th";
-                if ( num_last_num == 1 && num_second_to_last_num != 1 ) num_ending = "st";
-                if ( num_last_num == 2 && num_second_to_last_num != 1 ) num_ending = "nd";
-                if ( num_last_num == 3 && num_second_to_last_num != 1 ) num_ending = "rd";
-                var old_num_of_minutes = num_of_minutes - 1;
-                var advanced_num_of_minutes = num_of_minutes + 1;
-                new_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                if ( num_of_minutes < 5 ) new_chance = 50.34;
-                var existing_chance = Number( $( '.ttnb_probability' ).innerText.substring( 0, $( '.ttnb_probability' ).innerText.length - 1 ) );
-                chance = Number( ( Math.round( ( 1 - Math.E ** -( old_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                if ( num_of_minutes < 5 ) chance = 50.34;
-                if ( existing_chance != 0 && existing_chance != chance ) chance_to_show = new_chance;
-                else chance_to_show = chance;
-                var percentile = Number( Math.round( Number( ( 1 - ( chance_to_show / 100 ) ).toFixed( 2 ) ) * 100 ) );
-                var second_to_last_num = Number( String( percentile ).substring( String( percentile ).length - 2, String( percentile ).length - 1 ) );
-                var last_num = Number( String( percentile ).substring( String( percentile ).length - 1 ) );
-                var ending = "th";
-                if ( last_num == 1 && second_to_last_num != 1 ) ending = "st";
-                if ( last_num == 2 && second_to_last_num != 1 ) ending = "nd";
-                if ( last_num == 3 && second_to_last_num != 1 ) ending = "rd";
-                var advanced_chance = Number( ( Math.round( ( 1 - Math.E ** -( advanced_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                var advanced_percentile = Number( Math.round( Number( ( 1 - ( advanced_chance / 100 ) ).toFixed( 2 ) ) * 100 ) );
-                var advanced_last_num = Number( String( advanced_percentile ).substring( String( advanced_percentile ).length - 1 ) );
-                var advanced_second_to_last_num = Number( String( advanced_percentile ).substring( String( advanced_percentile ).length - 2, String( advanced_percentile ).length - 1 ) );
-                var advanced_ending = "th";
-                if ( advanced_last_num == 1 && advanced_second_to_last_num != 1 ) advanced_ending = "st";
-                if ( advanced_last_num == 2 && advanced_second_to_last_num != 1 ) advanced_ending = "nd";
-                if ( advanced_last_num == 3 && advanced_second_to_last_num != 1 ) advanced_ending = "rd";
-                var first_num_of_minutes = num_of_minutes - 1;
-                var second_num_of_minutes = num_of_minutes;
-                var third_num_of_minutes = num_of_minutes + 1;
-                var real_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                if ( real_chance < 9.52 ) real_chance = 9.52;
-                first_chance = Number( ( Math.round( ( 1 - Math.E ** -( old_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                first_num = old_num_of_minutes;
-                var first_text_minute_or_minutes = "minutes";
-                if ( first_num == 1 ) first_text_minute_or_minutes = "minute";
-                second_chance = Number( ( Math.round( ( 1 - Math.E ** -( num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                second_num = num_of_minutes;
-                var second_text_minute_or_minutes = "minutes";
-                if ( second_num == 1 ) second_text_minute_or_minutes = "minute";
-                third_chance = Number( ( Math.round( ( 1 - Math.E ** -( advanced_num_of_minutes / 10 ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-                third_num = advanced_num_of_minutes;
-                if ( chance_to_show < 9.52 ) chance_to_show = 9.52
-                var third_text_minute_or_minutes = "minutes";
-                if ( third_num == 1 ) third_text_minute_or_minutes = "minute";
-                var num_to_show = second_num_of_minutes;
-                if ( real_chance < chance_to_show ) var num_to_show = third_num_of_minutes;
-                if ( real_chance > chance_to_show ) var num_to_show = first_num_of_minutes;
-                if ( num_to_show <= 7 ) num_to_show = 7;
-                if ( chance_to_show <= 50.34 ) chance_to_show = 50.34;
-                if ( first_num <= 7 ) first_num = 7;
-                if ( second_num <= 7 ) second_num = 7;
-                if ( third_num <= 7 ) third_num = 7;
-                var minute_or_minutes = "minutes";
-                if ( num_to_show == 1 ) minute_or_minutes = "minute";
-                var secondsstring = "seconds";
-                if ( seconds_til_we_switch.endsWith( " 1" ) || seconds_til_we_switch == "1" ) secondsstring = "second";
-                status1 = `There is a chance of ${chance_to_show}% a block is found`;
-                status2 = `miners will have sought a block for ${num_to_show} ${minute_or_minutes}, and the chance of them finding a block in ${num_to_show} ${minute_or_minutes} is ${chance_to_show}%.`;
-                first_text_1 = `There is a chance of ${first_chance}% a block is found`;
-                first_text_2 = `miners will have sought a block for ${first_num} ${first_text_minute_or_minutes}, and the chance of them finding a block in ${first_num} ${first_text_minute_or_minutes} is ${first_chance}%.`;
-                second_text_1 = `There is a chance of ${second_chance}% a block is found`;
-                second_text_2 = `miners will have sought a block for ${second_num} ${second_text_minute_or_minutes}, and the chance of them finding a block in ${second_num} ${second_text_minute_or_minutes} is ${second_chance}%.`;
-                third_text_1 = `There is a chance of ${third_chance}% a block is found`;
-                third_text_2 = `miners will have sought a block for ${third_num} ${third_text_minute_or_minutes}, and the chance of them finding a block in ${third_num} ${third_text_minute_or_minutes} is ${third_chance}%.`;
-                if ( first_time ) $( '.ttnb_status' ).innerHTML = `<p class="status1">${status1} within ${seconds_til_we_switch} ${secondsstring}</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${status2}</span></p>`;
-                if ( first_time ) $( '.ttnb_probability' ).innerText = chance_to_show + "%";
                 first_time = false;
                 await waitSomeSeconds( 1 );
                 timeTilNextBlock();
@@ -270,85 +332,105 @@
                 if ( lb_timestamp ) {
                     var now = Math.floor( Date.now() / 1000 );
                     var time_since_last_block = Math.abs( now - lb_timestamp );
-                    var minute_we_are_in = Math.ceil( time_since_last_block / 60 );
-                    if ( minute_we_are_in <= 7 ) minute_we_are_in = 7;
-                    if ( minute_we_are_in <= 7 ) var seconds_time = time_since_last_block % ( 60 * 7 );
-                    else var seconds_time = time_since_last_block % 60;
-                    if ( minute_we_are_in <= 7 ) var seconds_til_we_switch = ( 60 * 7 ) - seconds_time;
-                    else var seconds_til_we_switch = 60 - seconds_time;
-                    seconds_til_we_switch = convertHMS( seconds_til_we_switch );
-                    seconds_til_we_switch = String( seconds_til_we_switch );
-                    if ( seconds_til_we_switch == "1 minute 0" ) seconds_til_we_switch = "60";
-                    var secondsstring = "seconds";
-                    if ( seconds_til_we_switch.endsWith( " 1" ) || seconds_til_we_switch == "1" ) secondsstring = "second";
-                    if ( minute_we_are_in <= 7 ) var progress = Number( ( ( seconds_time / ( 60 * 7 ) ) * 100 ).toFixed( 2 ) );
-                    else var progress = Number( ( ( seconds_time / 60 ) * 100 ).toFixed( 2 ) );
-                    $( '.ttnb_progressBar' ).style.width = `${progress}%`;
-                    if ( !seconds_time ) {
-                        var text_to_use_1 = status1;
-                        var text_to_use_2 = status2;
-                        var existing_chance = Number( $( '.ttnb_probability' ).innerText.substring( 0, $( '.ttnb_probability' ).innerText.length - 1 ) );
-                        if ( existing_chance == first_chance ) {
-                            var text_to_use_1 = second_text_1;
-                            var text_to_use_2 = second_text_2;
-                            var chance_to_use = second_chance;
-                        }
-                        if ( existing_chance == second_chance ) {
-                            var text_to_use_1 = third_text_1;
-                            var text_to_use_2 = third_text_2;
-                            var chance_to_use = third_chance;
-                        }
-                        if ( existing_chance != first_chance && existing_chance != second_chance ) {
-                            var text_to_use_1 = first_text_1;
-                            var text_to_use_2 = first_text_2;
-                            var chance_to_use = first_chance;
-                        }
-                        if ( prev_num == 7 && minute_we_are_in == 8 ) {
-                            prev_num = null;
-                            var text_to_use_1 = `There is a chance of 55.07% a block is found`;
-                            var text_to_use_2 = `miners will have sought a block for 8 minutes, and the chance of them finding a block in 8 minutes is 55.07%.`;
-                            var chance_to_use = 55.07;                            
-                        }
-                        if ( minute_we_are_in <= 7 ) {
-                            var text_to_use_1 = `There is a chance of 50.34% a block is found`;
-                            var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
-                            var chance_to_use = 50.34;
-                        }
-                        if ( new_block_found ) {
-                            new_block_found = false;
-                            var text_to_use_1 = `There is a chance of 50.34% a block is found`;
-                            var text_to_use_2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
-                            var chance_to_use = 50.34;
-                        }
-                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${text_to_use_1} within ${seconds_til_we_switch} ${secondsstring}</p><p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${text_to_use_2}</span></p>`;
-                        $( '.ttnb_probability' ).innerText = chance_to_use + "%";
-                    } else {
-                        var mystatus1 = $( '.status1' ).innerText.substring( 0, $( '.status1' ).innerText.indexOf( " within" ) );
-                        var mystatus2 = $( '.status2' ).innerText;
-                        if ( new_block_found ) {
-                            new_block_found = false;
-                            var mystatus1 = `There is a chance of 50.34% a block is found`;
-                            var mystatus2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minute is 50.34%.`;
-                            $( '.ttnb_probability' ).innerText = "50.34%";
-                        }
-                        if ( prev_num == 7 && minute_we_are_in == 8 ) {
-                            prev_num = null;
-                            var mystatus1 = `There is a chance of 55.07% a block is found`;
-                            var mystatus2 = `miners will have sought a block for 8 minutes, and the chance of them finding a block in 8 minutes is 55.07%.`;
-                            $( '.ttnb_probability' ).innerText = "55.07%";
-                        }
-                        if ( minute_we_are_in <= 7 ) {
-                            var mystatus1 = `There is a chance of 50.34% a block is found`;
-                            var mystatus2 = `miners will have sought a block for 7 minutes, and the chance of them finding a block in 7 minutes is 50.34%.`;
-                            $( '.ttnb_probability' ).innerText = "50.34%";
-                        }
-                        $( '.ttnb_status' ).innerHTML = `<p class="status1">${mystatus1} within ${seconds_til_we_switch} ${secondsstring}</p>Okay that's not true, statistics is complicated. It *is* true that when the time is up, <span class="status2">${mystatus2}</span></p>`;
+                    time_in_seconds = time_since_last_block;
+                    current_percent = Number( ( Math.round( ( 1 - Math.E ** -( time_in_seconds / ( 10 * 60 ) ) ) * 10000 ) / 100 ).toFixed( 2 ) );
+                    $( '.current_percent' ).innerText = current_percent.toFixed( 2 ) + "%";
+                    var time_til_10 = convertHMS( 63 - time_in_seconds );
+                    var time_til_25 = convertHMS( 173 - time_in_seconds );
+                    var time_til_50 = convertHMS( 416 - time_in_seconds );
+                    var time_til_75 = convertHMS( 832 - time_in_seconds );
+                    var time_til_90 = convertHMS( 1382 - time_in_seconds );
+                    var time_til_95 = convertHMS( 1797 - time_in_seconds );
+                    var time_til_97_5 = convertHMS( 2214 - time_in_seconds );
+                    var time_til_99 = convertHMS( 2766 - time_in_seconds );
+                    if ( findSphere( current_percent ) == 0 ) var time_til = time_til_10;
+                    if ( findSphere( current_percent ) == 1 ) var time_til = time_til_25;
+                    if ( findSphere( current_percent ) == 2 ) var time_til = time_til_50;
+                    if ( findSphere( current_percent ) == 3 ) var time_til = time_til_75;
+                    if ( findSphere( current_percent ) == 4 ) var time_til = time_til_90;
+                    if ( findSphere( current_percent ) == 5 ) var time_til = time_til_95;
+                    if ( findSphere( current_percent ) == 6 ) var time_til = time_til_97_5;
+                    if ( findSphere( current_percent ) == 7 ) var time_til = time_til_99;
+                    var tierstring = "seconds";
+                    if ( findSphere( current_percent ) < 5 && time_til.endsWith( " 1" ) || time_til == "1" ) tierstring = "second";
+                    if ( findSphere( current_percent ) == 0 ) {
+                        $( '.ttnb_probability' ).innerText = "Speedy";
+                        $( '.ttnb_probability' ).style.backgroundColor = "green";
+                        $( '.ttnt' ).innerText = `${time_til_10} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is currently progressing through tier one, "Speedy" -- among the top 10% of fastest blocks.`;
                     }
+                    if ( findSphere( current_percent ) == 1 ) {
+                        $( '.ttnb_probability' ).innerText = "Decent";
+                        $( '.ttnb_probability' ).style.backgroundColor = "blue";
+                        $( '.ttnt' ).innerText = `${time_til_25} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is currently progressing through tier two, "Decent" -- among the top 25% of fastest blocks.`;
+                    }
+                    if ( findSphere( current_percent ) == 2 ) {
+                        $( '.ttnb_probability' ).innerText = "Normal";
+                        $( '.ttnb_probability' ).style.backgroundColor = "yellow";
+                        $( '.ttnt' ).innerText = `${time_til_50} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is currently progressing through tier three, "Normal" -- 50% of blocks make it past this tier and 50% do not.`;
+                    }
+                    if ( findSphere( current_percent ) == 3 ) {
+                        $( '.ttnb_probability' ).innerText = "Pokey";
+                        $( '.ttnb_probability' ).style.backgroundColor = "orange";
+                        $( '.ttnt' ).innerText = `${time_til_75} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is currently progressing through tier four, "Pokey." Statistically, the block should have been found by now, but a healthy 25% of them make it to this tier or beyond, so nbd.`;
+                    }
+                    if ( findSphere( current_percent ) == 4 ) {
+                        $( '.ttnb_probability' ).innerText = "Crawler";
+                        $( '.ttnb_probability' ).style.backgroundColor = "pink";
+                        $( '.ttnt' ).innerText = `${time_til_90} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is currently progressing through tier five, "Crawler" -- fewer than 25% of blocks are this slow.`;
+                    }
+                    if ( findSphere( current_percent ) == 5 ) {
+                        $( '.ttnb_probability' ).innerText = "Sloth";
+                        $( '.ttnb_probability' ).style.backgroundColor = "red";
+                        $( '.ttnt' ).innerText = `${time_til_95} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is in tier six, "Sloth" -- only 10% of blocks are this slow.`;
+                    }
+                    if ( findSphere( current_percent ) == 6 ) {
+                        $( '.ttnb_probability' ).innerText = "Tarbaby";
+                        $( '.ttnb_probability' ).style.backgroundColor = "brown";
+                        $( '.ttnt' ).innerText = `${time_til_97_5} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is in tier seven, "Tarbaby" -- I'm sorry this happened to you.`;
+                    }
+                    if ( findSphere( current_percent ) == 7 ) {
+                        $( '.ttnb_probability' ).innerText = "Plaid";
+                        $( '.ttnb_probability' ).style.backgroundColor = "red";
+                        $( '.ttnb_probability' ).classList.add( "plaid" );
+                        $( '.ttnt' ).innerText = `${time_til_99} ${tierstring}`;
+                        $( '.tier_info' ).innerText = `The block is in tier eight, "Plaid" -- the only explanation is that you are a sinner.`;
+                    }
+                    if ( findSphere( current_percent ) > 7 ) {
+                        $( '.ttnb_probability' ).innerText = "The 1%";
+                        $( '.ttnb_probability' ).style.backgroundColor = "gold";
+                        $( '.ttnt' ).innerText = `There is no next tier, this is the last one`;
+                        $( '.ttnb_progressBar' ).style.width = `99%`;
+                        $( '.tier_info' ).innerText = `The block is in tier nine, "The 1%" -- we've wrapped back around to lucky.`;
+                    }
+                    if ( findSphere( current_percent ) != 7 ) $( '.ttnb_probability' ).classList.remove( "plaid" );
+                    var first_num = findSphere( current_percent );
+                    var second_num = findSphere( current_percent ) - 1;
+                    if ( second_num < 0 ) second_num = 0;
+                    var total_time = tiers[ first_num ] - tiers[ second_num ];
+                    if ( total_time < 1 || !total_time ) {
+                        total_time = tiers[ 0 ];
+                        var progress = Number( ( ( time_in_seconds / total_time ) * 100 ).toFixed( 2 ) );
+                    }
+                    else var progress = Number( ( ( Number( time_in_seconds - tiers[ second_num ] ) / total_time ) * 100 ).toFixed( 2 ) );
+                    if ( findSphere( current_percent ) <= 7 ) $( '.ttnb_progressBar' ).style.width = `${Math.ceil( progress )}%`;
                 }
                 await waitSomeSeconds( 1 );
                 smoothProgress();
             }
             smoothProgress();
+            var showToast = content => {
+                $( '.toast' ).innerHTML = content;
+                $( '.toast' ).classList.add( "show" );
+                setTimeout( () => $( '.toast' ).classList.remove( "show" ), 3000 );
+            }
         </script>
+        <div class="toast"></div>
     </body>
 </html>
