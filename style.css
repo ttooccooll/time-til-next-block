@@ -1,0 +1,143 @@
+@font-face {
+    font-family: "m";
+    src: url("m.ttf");
+}
+
+* {
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    font-family: "m";
+    background-color: grey;
+}
+html {
+    max-width: 70ch;
+    padding: 3rem 0rem 3rem 1rem;
+    margin: auto;
+    line-height: 1.25;
+}
+h1 {
+    font-size: 2rem;
+}
+h2 {
+    font-size: 1.5rem;
+    margin-right: 30%;
+}
+p {
+    margin-right: 30%;
+}
+input {
+    line-height: 1.25;
+    width: 100%;
+    height: 1.8rem;
+    font-size: 1.15rem;
+    border: 1px solid grey;
+}
+.ttnb_status {
+    margin-top: 1rem;
+}
+.toast {
+  box-sizing: border-box;
+  visibility: hidden;
+  width: 250px;
+  margin-left: -125px;
+  background-color: rgb(203, 0, 0);
+  color: white;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+}
+
+.toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+.plaid {
+    background-color: red;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.2) 15px, rgba(255, 255, 255, 0.2) 30px), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255,255,255,0.4) 15px, rgba(255,255,255,0.4) 30px);
+    background-attachment: fixed;
+}
+@media screen and (max-width: 600px) {
+}
+
+.ttnb_progressOutline {
+    transform: rotate(-90deg);
+    width: 30em;
+    height: 2rem;
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 25px; overflow: hidden;
+    background: rgb(42, 0, 0);
+    box-shadow: black 0 3px 5px;
+    position: fixed;
+    right: -10%;
+    bottom: 50%;
+    animation: lavaBubblingz 3s infinite;
+}
+
+@keyframes lavaBubblingz {
+    0% {
+        box-shadow: inset 0 0 19px rgba(226, 4, 4, 0.599),black 0 3px 5px;
+    }
+    25% {
+        box-shadow: inset 0 0 14px rgb(255, 242, 0, 0.299),black 0 3px 5px;
+    }
+    50% {
+        box-shadow: inset 0 0 11px rgb(255, 89, 0, 0.599),black 0 3px 5px;
+    }
+    75% {
+        box-shadow: inset 0 0 14px rgb(255, 242, 0, 0.299),black 0 3px 5px;
+    }
+    100% {
+        box-shadow: inset 0 0 19px rgb(226, 4, 4, 0.599),black 0 3px 5px;
+    }
+}
+
+.ttnb_progressBar {
+    height: 2rem;
+    width: 100%;
+    background: linear-gradient(to bottom, #ff0000, #ff3300, #ff6600, #ff9900, #ffcc00, #ffff00, #ffcc00, #ff9900, #ff6600, #ff3300, #ff0000);
+    animation: lavaBubbling .3s infinite;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 14px 4px red;
+}
+
+@keyframes lavaBubbling {
+    0% {
+        box-shadow: inset 0 10px 49px rgb(226, 4, 4), 0 14px 4px red;
+    }
+    25% {
+        box-shadow: inset 0 20px 24px rgb(255, 242, 0), 0 11px 9px rgb(255, 255, 0);
+    }
+    50% {
+        box-shadow: inset 0 14px 11px rgb(255, 89, 0), 0 18px 14px rgb(255, 136, 0);
+    }
+    75% {
+        box-shadow: inset 0 40px 34px rgb(255, 242, 0), 0 18px 14px rgb(255, 255, 0);
+    }
+    100% {
+        box-shadow: inset 0 10px 49px rgb(226, 4, 4), 0 14px 4px red;
+    }
+}
