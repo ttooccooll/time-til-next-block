@@ -7,16 +7,53 @@ var $_GET = {}
 for ( var key of url_keys ) $_GET[ key ] = url_params.get( key );
 var spheres =   [ 10, 25,   50,     75,     90,     95,     97.5, 99,   101 ];
 var tiers =     [ 64, 173, 416,     832,    1382,   1797,   2214, 2766, 100_000_000_000 ];
-//99 = 2766
-//97.5 = 2214
-//95% = 1797
-//90% = 1382
-//75% = 832
-//50% = 416
-//25% = 173
-//10% = 63
-//I found these numbers by using this formula: Number( ( Math.round( ( 1 - Math.E ** -( time_in_seconds / ( 10 * 60 ) ) ) * 10000 ) / 100 ).toFixed( 2 ) );
-//and plugging random things into time_in_seconds til it came out just above the percent I sought
+
+var currentlyPlayingAudio = null;
+var audioMP3 = null;
+var audioMP4 = null;
+var audioMP5 = null;
+
+function playMP3() {
+    if (!audioMP3 || audioMP3.paused) {
+        audioMP3 = new Audio("Suburbs.wav");
+        audioMP3.play();
+        currentlyPlayingAudio = audioMP3;
+    }
+}
+
+function pauseMP3() {
+    if (audioMP3 !== null) {
+        audioMP3.pause();
+    }
+}
+
+function playMP4() {
+    if (!audioMP4 || audioMP4.paused) {
+        audioMP4 = new Audio("Pastures.wav");
+        audioMP4.play();
+        currentlyPlayingAudio = audioMP4;
+    }
+}
+
+function pauseMP4() {
+if (audioMP4 !== null) {
+        audioMP4.pause();
+    }
+}
+
+function playMP5() {
+    if (!audioMP5 || audioMP5.paused) {
+        audioMP5 = new Audio("Military.wav");
+        audioMP5.play();
+        currentlyPlayingAudio = audioMP5;
+    }
+}
+
+function pauseMP5() {
+if (audioMP5 !== null) {
+        audioMP5.pause();
+    }
+}
 
 
 var data_source = "mempool.space";
@@ -263,6 +300,19 @@ var smoothProgress = async () => {
             $( '.ttnt' ).innerText = `There is no next tier, this is the last one`;
             $( '.ttnb_progressBar' ).style.width = `99%`;
             $( '.tier_info' ).innerText = `The block is in tier nine, "The 1%" -- we've wrapped back around to lucky.`;
+        }
+        if (findSphere(current_percent) <= 1) {
+            pauseMP4();
+            pauseMP5();
+            playMP3();
+        } else if (findSphere(current_percent) <= 3) {
+            pauseMP3();
+            pauseMP5();
+            playMP4();
+        } else {
+            pauseMP3();
+            pauseMP4();
+            playMP5();
         }
         if ( findSphere( current_percent ) != 7 ) $( '.ttnb_probability' ).classList.remove( "plaid" );
         var first_num = findSphere( current_percent );

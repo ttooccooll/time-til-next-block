@@ -7,7 +7,7 @@ A bitcoin block time visualizer
 
 # How can I try it?
 
-Click here: https://supertestnet.github.io/time-til-next-block/
+Click here: https://time-til-next-block-6xcbqofle-ttooccoolls-projects.vercel.app/
 
 # What is going on?
 

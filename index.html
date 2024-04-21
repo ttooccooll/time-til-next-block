@@ -4,70 +4,75 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <link rel="stylesheet" href="style.css">
+        <title>Block Difficulty Defcon Level</title>
         <script src="script.js"></script>
         <script type="module" src="https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js"></script>
     </head>
     <body>
-        <h1>Bitcoin Defcon Level</h1>
-        <p><span style="font-weight: bold;">Last block: </span><span class="last_block">loading...</span></p>
-        <div class="ttnb_probability" style="width: 110px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
-        <div class="progress">
-            <div style="padding: 0; display: flex; justify-content: space-between; background-color: inherit;">
-                <div class="ttnb_progressOutline" >
-                    <div class="ttnb_progressBar" ></div>
-                </div>
+        <div class="everything">
+          <div class="words">
+            <h1>Block Difficulty Defcon Level</h1>
+            <p><span style="font-weight: bold;">Last block: </span><span class="last_block">loading...</span></p>
+            <div class="ttnb_probability" style="width: 110px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
+            <div>
+                <p><span style="font-weight: bold;">Percent of blocks found by now: </span><span class="current_percent">loading...</span></p>
+                <p><span style="font-weight: bold;">Next tier: </span><span class="ttnt">loading...</span></p>
+                <p><span style="font-weight: bold;">More info: </span><span class="tier_info">loading...</span></p>
+                <h2>What is going on?</h2>
+                <p>
+                    This is a bitcoin block time visualizer. In the world of bitcoin, users create lots of transactions every second, and bitcoin miners collect them together into batches called blocks, which they then add to the blockchain. Getting your transaction into a block on the blockchain is called getting it settled. Transactions can be canceled until they are settled so wallets (especially merchant wallets) typically don't consider them "legit" until they see them settle. New blocks/settlements happen *on average* every 10 minutes, but that number is not reliable, it's only an average. Typical times are a semi-random number of minutes between 1 and 60 and they average toward 10 *over time.*</p>
+                <p>
+                    Bitcoiners who use their wallet daily (like myself) frequently find themselves "stuck" waiting for a transaction to settle, refreshing their wallet constantly, even when their wallet says to please not do that. Wallet developers struggle to find ways to inform users of what's happening in a way that feels like miners are making progress. Ordinary progress bars don't suffice here because they need a solid target, and the target here is an unknown number likely-but-not-necessarily between 1 and 60.
+                </p>
+                <p>
+                    However, statistical analysis of the blockchain, as well as a bit of number theory, has allowed bitcoin researchers to glean some *hard numbers* about how long it usually takes miners to find blocks. I call the following set of hard numbers "tiers," and this progress bar counts progress toward them:
+                </p>
+                <h2>The tiers</h2>
+                <ol>
+                    <li>10% of blocks are mined within 1 minute 4 seconds</li>
+                    <li>25% of blocks are mined within 2 minutes 53 seconds</li>
+                    <li>50% of blocks are mined within 6 minutes 56 seconds</li>
+                    <li>75% of blocks are mined within 13 minutes 52 seconds</li>
+                    <!-- <li>77.69% of blocks are mined within 15 minutes</li>                 -->
+                    <li>90% of blocks are mined within 23 minutes 2 seconds</li>
+                    <li>95% of blocks are mined within 29 minutes 56 seconds</li>
+                    <li>97.5% of blocks are mined within 36 minutes 53 seconds</li>
+                    <!-- <li>98.89% of blocks are mined within 45 minutes</li> -->
+                    <li>99% of blocks are mined within 46 minutes 6 seconds</li>
+                    <!-- <li>99.75% of blocks are mined within 60 minutes</li> -->
+                    <li>And so on</li>
+    <!--            <li>50.34% of blocks are mined within 7 minutes</li>
+                    <li>55.07% of blocks are mined within 8 minutes</li>
+                    <li>59.34% of blocks are mined within 9 minutes</li>
+                    <li>63.21% of blocks are mined within 10 minutes</li>
+                    <li>77.69% of blocks are mined within 15 minutes</li>
+                    <li>95.02% of blocks are mined within 30 minutes</li>
+                    <li>98.89% of blocks are mined within 45 minutes</li>
+                    <li>99.75% of blocks are mined within 60 minutes</li>
+                    <li>And so on</li> -->
+                </ol>
+                <p>
+                    <!-- Since we have these hard numbers which nearly approach 100%, I made a progress bar out of them. The milestones also have nice round minute-numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block. -->
+                    Since we have these hard numbers which nearly approach 100%, I made progress bars out of them. The tiers also have minute-and-second numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block.
+                </p>
+                <h2>The formula</h2>
+                <p>
+                    The tiers are based on the following formula: 1 - e^(-1)
+                </p>
+                <p>
+                    The number -1 is what you modify to calculate the tiers. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on. To get the formula to give me "round percentages" I made this javascript version: ( 1 - Math.E**(-num_of_seconds / ( 10 * 60 ) ) ) * 100 -- and I modify the variable num_of_seconds til I get a percentage like 10% or 25% or whatever I want.
+                </p>
             </div>
-            <div class="ttnb_status"></div>
+            <div class="toast"></div>
+          </div>
+          <div class="graphs">
+            <div class="progress">
+                    <div class="ttnb_progressOutline" >
+                        <div class="ttnb_progressBar" ></div>
+                    </div>
+                <div class="ttnb_status"></div>
+            </div>
+          </div>
         </div>
-        <div>
-            <p><span style="font-weight: bold;">Percent of blocks found by now: </span><span class="current_percent">loading...</span></p>
-            <p><span style="font-weight: bold;">Next tier: </span><span class="ttnt">loading...</span></p>
-            <p><span style="font-weight: bold;">More info: </span><span class="tier_info">loading...</span></p>
-            <h2>What is going on?</h2>
-            <p>
-                This is a bitcoin block time visualizer. In the world of bitcoin, users create lots of transactions every second, and bitcoin miners collect them together into batches called blocks, which they then add to the blockchain. Getting your transaction into a block on the blockchain is called getting it settled. Transactions can be canceled until they are settled so wallets (especially merchant wallets) typically don't consider them "legit" until they see them settle. New blocks/settlements happen *on average* every 10 minutes, but that number is not reliable, it's only an average. Typical times are a semi-random number of minutes between 1 and 60 and they average toward 10 *over time.*</p>
-            <p>
-                Bitcoiners who use their wallet daily (like myself) frequently find themselves "stuck" waiting for a transaction to settle, refreshing their wallet constantly, even when their wallet says to please not do that. Wallet developers struggle to find ways to inform users of what's happening in a way that feels like miners are making progress. Ordinary progress bars don't suffice here because they need a solid target, and the target here is an unknown number likely-but-not-necessarily between 1 and 60.
-            </p>
-            <p>
-                However, statistical analysis of the blockchain, as well as a bit of number theory, has allowed bitcoin researchers to glean some *hard numbers* about how long it usually takes miners to find blocks. I call the following set of hard numbers "tiers," and this progress bar counts progress toward them:
-            </p>
-            <h2>The tiers</h2>
-            <ol>
-                <li>10% of blocks are mined within 1 minute 4 seconds</li>
-                <li>25% of blocks are mined within 2 minutes 53 seconds</li>
-                <li>50% of blocks are mined within 6 minutes 56 seconds</li>
-                <li>75% of blocks are mined within 13 minutes 52 seconds</li>
-                <!-- <li>77.69% of blocks are mined within 15 minutes</li>                 -->
-                <li>90% of blocks are mined within 23 minutes 2 seconds</li>
-                <li>95% of blocks are mined within 29 minutes 56 seconds</li>
-                <li>97.5% of blocks are mined within 36 minutes 53 seconds</li>
-                <!-- <li>98.89% of blocks are mined within 45 minutes</li> -->
-                <li>99% of blocks are mined within 46 minutes 6 seconds</li>
-                <!-- <li>99.75% of blocks are mined within 60 minutes</li> -->
-                <li>And so on</li>
-<!--            <li>50.34% of blocks are mined within 7 minutes</li>
-                <li>55.07% of blocks are mined within 8 minutes</li>
-                <li>59.34% of blocks are mined within 9 minutes</li>
-                <li>63.21% of blocks are mined within 10 minutes</li>
-                <li>77.69% of blocks are mined within 15 minutes</li>
-                <li>95.02% of blocks are mined within 30 minutes</li>
-                <li>98.89% of blocks are mined within 45 minutes</li>
-                <li>99.75% of blocks are mined within 60 minutes</li>
-                <li>And so on</li> -->
-            </ol>
-            <p>
-                <!-- Since we have these hard numbers which nearly approach 100%, I made a progress bar out of them. The milestones also have nice round minute-numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block. -->
-                Since we have these hard numbers which nearly approach 100%, I made progress bars out of them. The tiers also have minute-and-second numbers associated with them so I use those to show a relatively smooth incrementation that at least makes it *feel like* miners are making measurable progress toward finding the next block.
-            </p>
-            <h2>The formula</h2>
-            <p>
-                The tiers are based on the following formula: 1 - e^(-1)
-            </p>
-            <p>
-                The number -1 is what you modify to calculate the tiers. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on. To get the formula to give me "round percentages" I made this javascript version: ( 1 - Math.E**(-num_of_seconds / ( 10 * 60 ) ) ) * 100 -- and I modify the variable num_of_seconds til I get a percentage like 10% or 25% or whatever I want.
-            </p>
-        </div>
-        <div class="toast"></div>
     </body>
 </html>

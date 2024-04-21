@@ -3,42 +3,39 @@
     src: url("m.ttf");
 }
 
-* {
-    box-sizing: border-box;
-    font-size: 1.15rem;
-    font-family: "m";
-}
-html {
-    max-width: 70ch;
+
+body {
     padding: 3rem 0rem 3rem 1rem;
-    margin: auto;
+    font-family: "m";
     line-height: 1.25;
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(49deg, #262626, #3e3e3e7b, #262626);
 }
+.everything {
+    width: 95%;
+    height: 95%;
+    display: flex;
+    flex-direction: row;
+}
 h1 {
     font-size: 2rem;
-    margin-right: 30%;
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(69deg, #686868, #a9a9a97b, #262626);
 }
 h2 {
     font-size: 1.5rem;
-    margin-right: 30%;
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(29deg, #575757, #a9a9a97b, #262626);
 }
 p {
-    margin-right: 30%;
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(78deg, #6d6d6d, #a9a9a97b, #262626);
 }
 ol {
-    margin-right: 30%;
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(29deg, #262626, #a9a9a97b, #262626);
@@ -101,15 +98,22 @@ input {
 }
 @media screen and (max-width: 600px) {
 }
+.words {
+    width: 70vw;
+}
+.graphs {
+    width: 10vw;
+}
 .progress {
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(49deg, #262626, #a9a9a97b, #262626);
     padding: 15px;
-    position: fixed;
-    right: -10%;
-    bottom: 50%;
-    transform: rotate(-90deg);
+    width: fit-content;
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    transform: translate(-50%, -50%) rotate(-90deg); 
     box-shadow: 
         0 0 55px rgba(0, 0, 0, 0.5),
         0 0 10px rgba(255, 255, 255, 0.137) inset;
@@ -147,7 +151,7 @@ input {
     height: 2rem;
     width: 100%;
     background: linear-gradient(to bottom, #ff0000, #ff3300, #ff6600, #ff9900, #ffcc00, #ffcc00, #ff9900, #ff6600, #ff3300, #ff0000);
-    animation: lavaBubbling 9s infinite;
+    animation: lavaBubbling 1s infinite;
     box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 14px 4px red;
     filter: blur(7px);
 }
