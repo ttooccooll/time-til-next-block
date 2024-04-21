@@ -7,23 +7,41 @@
     box-sizing: border-box;
     font-size: 1.15rem;
     font-family: "m";
-    background-color: grey;
 }
 html {
     max-width: 70ch;
     padding: 3rem 0rem 3rem 1rem;
     margin: auto;
     line-height: 1.25;
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(49deg, #262626, #3e3e3e7b, #262626);
 }
 h1 {
     font-size: 2rem;
+    margin-right: 30%;
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(69deg, #686868, #a9a9a97b, #262626);
 }
 h2 {
     font-size: 1.5rem;
     margin-right: 30%;
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(29deg, #575757, #a9a9a97b, #262626);
 }
 p {
     margin-right: 30%;
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(78deg, #6d6d6d, #a9a9a97b, #262626);
+}
+ol {
+    margin-right: 30%;
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(29deg, #262626, #a9a9a97b, #262626);
 }
 input {
     line-height: 1.25;
@@ -83,18 +101,27 @@ input {
 }
 @media screen and (max-width: 600px) {
 }
-
-.ttnb_progressOutline {
-    transform: rotate(-90deg);
-    width: 30em;
-    height: 2rem;
-    border: 3px solid rgb(0, 0, 0);
-    border-radius: 25px; overflow: hidden;
-    background: rgb(42, 0, 0);
-    box-shadow: black 0 3px 5px;
+.progress {
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(49deg, #262626, #a9a9a97b, #262626);
+    padding: 15px;
     position: fixed;
     right: -10%;
     bottom: 50%;
+    transform: rotate(-90deg);
+    box-shadow: 
+        0 0 55px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.137) inset;
+}
+
+.ttnb_progressOutline {
+    width: 30em;
+    height: 2rem;
+    border: 2px ridge rgb(0, 0, 0);
+    border-radius: 25px; overflow: hidden;
+    background: rgb(42, 0, 0);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
     animation: lavaBubblingz 3s infinite;
 }
 
@@ -119,25 +146,26 @@ input {
 .ttnb_progressBar {
     height: 2rem;
     width: 100%;
-    background: linear-gradient(to bottom, #ff0000, #ff3300, #ff6600, #ff9900, #ffcc00, #ffff00, #ffcc00, #ff9900, #ff6600, #ff3300, #ff0000);
-    animation: lavaBubbling .3s infinite;
+    background: linear-gradient(to bottom, #ff0000, #ff3300, #ff6600, #ff9900, #ffcc00, #ffcc00, #ff9900, #ff6600, #ff3300, #ff0000);
+    animation: lavaBubbling 9s infinite;
     box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 14px 4px red;
+    filter: blur(7px);
 }
 
 @keyframes lavaBubbling {
     0% {
-        box-shadow: inset 0 10px 49px rgb(226, 4, 4), 0 14px 4px red;
+        box-shadow: inset 0 1px 49px rgb(226, 4, 4), 0 4px 4px red;
     }
     25% {
-        box-shadow: inset 0 20px 24px rgb(255, 242, 0), 0 11px 9px rgb(255, 255, 0);
+        box-shadow: inset 0 2px 24px rgb(255, 149, 0), 0 11px 9px rgb(255, 255, 0);
     }
     50% {
-        box-shadow: inset 0 14px 11px rgb(255, 89, 0), 0 18px 14px rgb(255, 136, 0);
+        box-shadow: inset 0 4px 11px rgb(255, 89, 0), 0 8px 14px rgb(255, 136, 0);
     }
     75% {
-        box-shadow: inset 0 40px 34px rgb(255, 242, 0), 0 18px 14px rgb(255, 255, 0);
+        box-shadow: inset 0 4px 34px rgb(255, 0, 0), 0 8px 14px rgb(255, 255, 0);
     }
     100% {
-        box-shadow: inset 0 10px 49px rgb(226, 4, 4), 0 14px 4px red;
+        box-shadow: inset 0 1px 49px rgb(226, 4, 4), 0 4px 4px red;
     }
 }

@@ -5,13 +5,14 @@
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
+        <script type="module" src="https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js"></script>
     </head>
     <body>
         <h1>Bitcoin Defcon Level</h1>
         <p><span style="font-weight: bold;">Last block: </span><span class="last_block">loading...</span></p>
+        <div class="ttnb_probability" style="width: 110px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
         <div class="progress">
-            <div style="padding: 0; display: flex; justify-content: space-between;">
-                <div class="ttnb_probability" style="width: 110px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
+            <div style="padding: 0; display: flex; justify-content: space-between; background-color: inherit;">
                 <div class="ttnb_progressOutline" >
                     <div class="ttnb_progressBar" ></div>
                 </div>

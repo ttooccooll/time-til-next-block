@@ -216,7 +216,7 @@ var smoothProgress = async () => {
         }
         if ( findSphere( current_percent ) == 1 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:2";
-            $( '.ttnb_probability' ).style.backgroundColor = "darkyellow";
+            $( '.ttnb_probability' ).style.backgroundColor = "yellowgreen";
             $( '.ttnt' ).innerText = `${time_til_25} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing through tier two, "Decent" -- among the top 25% of fastest blocks.`;
         }
