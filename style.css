@@ -216,6 +216,7 @@ input {
   cursor: pointer;
 }
 .mp {
+    font-size: 2em;
     width: 50%;
 }
 #theme {
@@ -225,6 +226,7 @@ input {
     font-family: "m";
     color: black;
     cursor: pointer;
+    font-size: 2em;
 }
 #themez {
     border: 5px black;
@@ -233,4 +235,5 @@ input {
     font-family: "m";
     color: black;
     cursor: pointer;
+    font-size: 2em;
 }
