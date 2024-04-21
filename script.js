@@ -311,7 +311,7 @@ var smoothProgress = async () => {
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `There is no next tier, this is the last one`;
             $( '.ttnb_progressBar' ).style.width = `99%`;
-            $( '.tier_info' ).innerText = `The block is in tier nine, "The 1%" -- we've wrapped back around to lucky.`;
+            $( '.tier_info' ).innerText = `This may be the last block ever! Head for the hills and panic.`;
         }
         if (findSphere(current_percent) <= 1) {
             pauseMP4();
