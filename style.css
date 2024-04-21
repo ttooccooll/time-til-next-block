@@ -218,3 +218,19 @@ input {
 .mp {
     width: 50%;
 }
+#theme {
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    font-family: "m";
+    color: black;
+    cursor: pointer;
+}
+#themez {
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    font-family: "m";
+    color: black;
+    cursor: pointer;
+}

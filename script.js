@@ -352,12 +352,50 @@ document.addEventListener("DOMContentLoaded", function () {
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
     var modalOpened = false;
+    var audioMP6;
+    var audioMP7;
+
+    function playMP6() {
+        if (audioMP7 && !audioMP7.paused) {
+            audioMP7.pause();
+        }
+        audioMP6 = new Audio("Create.wav");
+        audioMP6.play();
+    }
+
+    function pauseMP6() {
+        if (audioMP6 && !audioMP6.paused) { 
+            audioMP6.pause();
+        }
+    }
+
+    function pauseMP7() {
+        if (audioMP7 && !audioMP7.paused) { 
+            audioMP7.pause();
+        }
+    }
+
+    function playMP7() {
+        if (audioMP6 && !audioMP6.paused) {
+            audioMP6.pause();
+        }
+        audioMP7 = new Audio("Orion.wav");
+        audioMP7.play();
+    }
+    
+    var button = document.getElementById("theme");
+    button.addEventListener("click", playMP6);
+    
+    var button = document.getElementById("themez");
+    button.addEventListener("click", playMP7);
 
     window.onload = function() {
-    modal.style.display = "block";
+        modal.style.display = "block";
     }
 
     span.onclick = function() {
-    modal.style.display = "none";
+        pauseMP6();
+        pauseMP7();
+        modal.style.display = "none";
     }
 });
