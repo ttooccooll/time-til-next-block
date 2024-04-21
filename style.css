@@ -10,7 +10,7 @@ body {
     line-height: 1.25;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #262626, #3e3e3e7b, #262626);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
 }
 .everything {
     width: 95%;
@@ -19,33 +19,36 @@ body {
     flex-direction: row;
 }
 h1 {
-    font-size: 2rem;
+    font-size: 4rem;
+    padding-left: 1rem;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(69deg, #686868, #a9a9a97b, #262626);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
 }
 h2 {
     font-size: 1.5rem;
+    padding-left: 1rem;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(29deg, #575757, #a9a9a97b, #262626);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
 }
 p {
     border: 5px black;
+    padding-left: 1rem;
     border-style: ridge;
-    background: linear-gradient(78deg, #6d6d6d, #a9a9a97b, #262626);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
 }
 ol {
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(29deg, #262626, #a9a9a97b, #262626);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
 }
 input {
     line-height: 1.25;
     width: 100%;
     height: 1.8rem;
     font-size: 1.15rem;
-    border: 1px solid grey;
+    border: 1px solid black;
 }
 .ttnb_status {
     margin-top: 1rem;
@@ -92,8 +95,6 @@ input {
     to {bottom: 0; opacity: 0;}
 }
 .plaid {
-    background-color: red;
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 255, 255, 0.2) 15px, rgba(255, 255, 255, 0.2) 30px), repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255,255,255,0.4) 15px, rgba(255,255,255,0.4) 30px);
     background-attachment: fixed;
 }
 @media screen and (max-width: 600px) {
@@ -107,12 +108,12 @@ input {
 .progress {
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #262626, #a9a9a97b, #262626);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
     padding: 15px;
     width: fit-content;
     position: absolute;
     top: 50%;
-    left: 90%;
+    left: 87%;
     transform: translate(-50%, -50%) rotate(-90deg); 
     box-shadow: 
         0 0 55px rgba(0, 0, 0, 0.5),
@@ -122,7 +123,7 @@ input {
 .ttnb_progressOutline {
     width: 30em;
     height: 2rem;
-    border: 2px ridge rgb(0, 0, 0);
+    border: 7px ridge black;
     border-radius: 25px; overflow: hidden;
     background: rgb(42, 0, 0);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
@@ -172,4 +173,48 @@ input {
     100% {
         box-shadow: inset 0 1px 49px rgb(226, 4, 4), 0 4px 4px red;
     }
+}
+
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-image: url("hall.png");
+  background-position: center;
+  background-size: cover;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%;
+  height: 100%;
+}
+
+.close {
+    border: 5px black;
+    border-style: ridge;
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482);
+    font-family: "m";
+    color: black;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: start;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.mp {
+    width: 50%;
 }

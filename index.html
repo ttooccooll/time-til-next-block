@@ -4,14 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <link rel="stylesheet" href="style.css">
-        <title>Block Difficulty Defcon Level</title>
+        <title>Next Block Defcon Level</title>
         <script src="script.js"></script>
         <script type="module" src="https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js"></script>
     </head>
     <body>
         <div class="everything">
           <div class="words">
-            <h1>Block Difficulty Defcon Level</h1>
+            <h1>Next Block Defcon Level</h1>
             <p><span style="font-weight: bold;">Last block: </span><span class="last_block">loading...</span></p>
             <div class="ttnb_probability" style="width: 110px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
             <div>
@@ -74,5 +74,11 @@
             </div>
           </div>
         </div>
+        <div id="myModal" class="modal" style="display: block;">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p class="mp">Will the next block ever be minted? This is a tool to help you determine how close we are to total Bitcoin network difficulty adjustment death spiral.</p>
+            </div>
+          </div>
     </body>
 </html>

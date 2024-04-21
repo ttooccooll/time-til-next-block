@@ -14,10 +14,14 @@ var audioMP4 = null;
 var audioMP5 = null;
 
 function playMP3() {
+    var modal = document.getElementById("myModal");
+    if (!modal.style.display || modal.style.display === "none") {
     if (!audioMP3 || audioMP3.paused) {
         audioMP3 = new Audio("Suburbs.wav");
         audioMP3.play();
         currentlyPlayingAudio = audioMP3;
+    }
+} else {
     }
 }
 
@@ -28,10 +32,14 @@ function pauseMP3() {
 }
 
 function playMP4() {
+    var modal = document.getElementById("myModal");
+    if (!modal.style.display || modal.style.display === "none") {
     if (!audioMP4 || audioMP4.paused) {
         audioMP4 = new Audio("Pastures.wav");
         audioMP4.play();
         currentlyPlayingAudio = audioMP4;
+    }
+} else {
     }
 }
 
@@ -42,10 +50,14 @@ if (audioMP4 !== null) {
 }
 
 function playMP5() {
+    var modal = document.getElementById("myModal");
+    if (!modal.style.display || modal.style.display === "none") {
     if (!audioMP5 || audioMP5.paused) {
         audioMP5 = new Audio("Military.wav");
         audioMP5.play();
         currentlyPlayingAudio = audioMP5;
+    }
+} else {
     }
 }
 
@@ -247,56 +259,56 @@ var smoothProgress = async () => {
         if ( findSphere( current_percent ) < 5 && time_til.endsWith( " 1" ) || time_til == "1" ) tierstring = "second";
         if ( findSphere( current_percent ) == 0 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:1";
-            $( '.ttnb_probability' ).style.backgroundColor = "green";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ffd500";
             $( '.ttnt' ).innerText = `${time_til_10} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing through tier one, "Speedy" -- among the top 10% of fastest blocks.`;
         }
         if ( findSphere( current_percent ) == 1 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:2";
-            $( '.ttnb_probability' ).style.backgroundColor = "yellowgreen";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ffb600";
             $( '.ttnt' ).innerText = `${time_til_25} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing through tier two, "Decent" -- among the top 25% of fastest blocks.`;
         }
         if ( findSphere( current_percent ) == 2 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:3";
-            $( '.ttnb_probability' ).style.backgroundColor = "yellow";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff9400";
             $( '.ttnt' ).innerText = `${time_til_50} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing through tier three, "Normal" -- 50% of blocks make it past this tier and 50% do not.`;
         }
         if ( findSphere( current_percent ) == 3 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:4";
-            $( '.ttnb_probability' ).style.backgroundColor = "orange";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff6e00";
             $( '.ttnt' ).innerText = `${time_til_75} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing through tier four, "Pokey." Statistically, the block should have been found by now, but a full 50% of them make it to this tier, and 25% of them even make it *beyond* this tier, so nbd.`;
         }
         if ( findSphere( current_percent ) == 4 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:5";
-            $( '.ttnb_probability' ).style.backgroundColor = "darkorange";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff3b00";
             $( '.ttnt' ).innerText = `${time_til_90} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing through tier five, "Crawler" -- fewer than 25% of blocks are this slow.`;
         }
         if ( findSphere( current_percent ) == 5 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:6";
-            $( '.ttnb_probability' ).style.backgroundColor = "red";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `${time_til_95} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is in tier six, "Sloth" -- only 10% of blocks are this slow.`;
         }
         if ( findSphere( current_percent ) == 6 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:7";
-            $( '.ttnb_probability' ).style.backgroundColor = "red";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `${time_til_97_5} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is in tier seven, "Tarbaby" -- I'm sorry this happened to you.`;
         }
         if ( findSphere( current_percent ) == 7 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:8";
-            $( '.ttnb_probability' ).style.backgroundColor = "red";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnb_probability' ).classList.add( "plaid" );
             $( '.ttnt' ).innerText = `${time_til_99} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is in tier eight, "Plaid" -- the only explanation is that you are a sinner.`;
         }
         if ( findSphere( current_percent ) > 7 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:9";
-            $( '.ttnb_probability' ).style.backgroundColor = "red";
+            $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `There is no next tier, this is the last one`;
             $( '.ttnb_progressBar' ).style.width = `99%`;
             $( '.tier_info' ).innerText = `The block is in tier nine, "The 1%" -- we've wrapped back around to lucky.`;
@@ -335,3 +347,17 @@ var showToast = content => {
     $( '.toast' ).classList.add( "show" );
     setTimeout( () => $( '.toast' ).classList.remove( "show" ), 3000 );
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    var modalOpened = false;
+
+    window.onload = function() {
+    modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+});
