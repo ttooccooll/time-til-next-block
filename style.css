@@ -10,7 +10,7 @@ body {
     line-height: 1.25;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
 }
 .everything {
     width: 95%;
@@ -23,25 +23,25 @@ h1 {
     padding-left: 1rem;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
 }
 h2 {
     font-size: 1.5rem;
     padding-left: 1rem;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
 }
 p {
     border: 5px black;
     padding-left: 1rem;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
 }
 ol {
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
 }
 input {
     line-height: 1.25;
@@ -108,7 +108,7 @@ input {
 .progress {
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
     padding: 15px;
     width: fit-content;
     position: absolute;
@@ -201,7 +201,7 @@ input {
 .close {
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA);
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
     font-family: "m";
     color: black;
   font-size: 28px;
