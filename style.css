@@ -11,6 +11,7 @@ body {
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 300px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 180px 36px -18px inset;
 }
 .everything {
     width: 95%;
@@ -24,6 +25,7 @@ h1 {
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: 0 0 5px black;
 }
 h2 {
     font-size: 1.5rem;
@@ -31,17 +33,20 @@ h2 {
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: 0 0 5px black;
 }
 p {
     border: 5px black;
     padding-left: 1rem;
     border-style: ridge;
     background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: 0 0 5px black;
 }
 ol {
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: 0 0 5px black;
 }
 input {
     line-height: 1.25;
@@ -109,14 +114,13 @@ input {
     border: 5px black;
     border-style: ridge;
     background: linear-gradient(-49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: 0 0 5px black;
     width: fit-content;
     position: absolute;
     bottom: 10%;
     left: 82%;
     transform: translate(-50%, -50%) rotate(-90deg); 
-    box-shadow: 
-        0 0 55px rgba(0, 0, 0, 0.5),
-        0 0 10px rgba(255, 255, 255, 0.038) inset;
+    box-shadow: 0 0 5px black;
 }
 
 .ttnb_progressOutline {
@@ -125,7 +129,7 @@ input {
     border: 7px ridge black;
     border-radius: 25px; overflow: hidden;
     background: rgb(42, 0, 0);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 0 5px black;
     animation: lavaBubblingz 3s infinite;
 }
 
@@ -136,7 +140,7 @@ input {
     border: 7px ridge black;
     border-radius: 25px; overflow: hidden;
     background: rgb(42, 0, 0);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 0 5px black;
     animation: lavaBubblingz 3s infinite;
 }
 
@@ -226,6 +230,7 @@ input {
   font-size: 28px;
   font-weight: bold;
   text-align: start;
+  box-shadow: 0 0 5px black;
 }
 
 .close:hover,
@@ -246,6 +251,7 @@ input {
     color: black;
     cursor: pointer;
     font-size: 2em;
+    box-shadow: 0 0 5px black;
 }
 #themez {
     border: 5px black;
@@ -255,6 +261,7 @@ input {
     color: black;
     cursor: pointer;
     font-size: 2em;
+    box-shadow: 0 0 5px black;
 }
 .y {
     border: 5px black;
@@ -262,6 +269,7 @@ input {
     background: linear-gradient(-49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
     padding: 15px;
     margin: 10px;
+    box-shadow: 0 0 5px black;
 }
 @media (max-width: 1200px) {
     .words {
