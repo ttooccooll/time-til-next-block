@@ -6,6 +6,7 @@
 
 body {
     padding: 3rem 0rem 3rem 1rem;
+    word-wrap: break-word; 
     font-family: "m";
     line-height: 1.25;
     border: 5px black;
@@ -290,11 +291,11 @@ input {
 
 .closez {
   color: rgb(65, 65, 65);
-  font-size: 8em;
+  font-size: 3em;
   font-weight: bold;
   text-align: center;
-  opacity: .6;
-  margin-left: 10%;
+  opacity: .8;
+  margin-left: 20%;
   font-weight: 500;
 }
 
@@ -308,22 +309,22 @@ input {
     background: transparent;
     border: none;
     font-family: "m";
-    opacity: .6;
+    opacity: .8;
     color: black;
     cursor: pointer;
-    font-size: 8em;
-    margin-left: 40%;
+    font-size: 3em;
+    margin-left: 70%;
     font-weight: 500;
 }
 .escape {
     background: transparent;
     border: none;
     font-family: "m";
-    opacity: .6;
+    opacity: .8;
     color: black;
     cursor: pointer;
-    font-size: 8em;
-    margin-left: 10%;
+    font-size: 3em;
+    margin-left: 20%;
     text-decoration: none;
     font-weight: 500;
 }
