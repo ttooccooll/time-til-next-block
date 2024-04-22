@@ -118,17 +118,17 @@ async function getAllTransactionsInBlock( blockhash ) {
 }
 var getFeeInfo = async blockhash => {
     var fees = [];
-    // var weights = [];
+    var weights = [];
     var txs = await getAllTransactionsInBlock( "00000000000000000001ee52b067dd630d96313f2bd2b8f2a6b9277600753181" )
     txs.forEach( item => fees.push( Number( ( item.fee / item.weight ).toFixed( 2 ) ) ) );
-    // txs.forEach( item => weights.push( item.weight ) );
+    txs.forEach( item => weights.push( item.weight ) );
     fees.sort()
     var sum_of_fees = 0;
     fees.forEach( item => sum_of_fees = sum_of_fees + item );
     var sum_of_weights = 0;
-    // weights.forEach( item => sum_of_weights = sum_of_weights + item );
+    weights.forEach( item => sum_of_weights = sum_of_weights + item );
     var average_fee = Number( ( sum_of_fees / fees.length ).toFixed( 2 ) );
-    // var average_weight = Number( ( sum_of_weights / weights.length ).toFixed( 2 ) );
+    var average_weight = Number( ( sum_of_weights / weights.length ).toFixed( 2 ) );
     if ( fees.length % 2 ) var median_fee = fees[ Math.ceil( fees.length / 2 ) ];
     else var median_fee = ( fees[ fees.length / 2 ] + fees[ ( fees.length / 2 ) + 1 ] ) / 2;
     console.log( "average fee:", average_fee, "median fee:", median_fee );
@@ -156,6 +156,7 @@ var getFeeInfo = async blockhash => {
     //perhaps I can also estimate whether their tx is likely to be pushed out of the block before it is mined by finding out how
     //many txs *beating yours* were added to the mempool during the last 30 seconds and extrapolating from that data
 }
+getFeeInfo();
 var waitSomeSeconds = num => {
     var num = num.toString() + "000";
     num = Number( num );
@@ -336,6 +337,7 @@ var smoothProgress = async () => {
             var progress = Number( ( ( time_in_seconds / total_time ) * 100 ).toFixed( 2 ) );
         }
         else var progress = Number( ( ( Number( time_in_seconds - tiers[ second_num ] ) / total_time ) * 100 ).toFixed( 2 ) );
+        $( '.total_progressBar' ).style.width = `${( current_percent.toFixed( 2 ) )}%`;
         if ( findSphere( current_percent ) <= 7 ) $( '.ttnb_progressBar' ).style.width = `${Math.ceil( progress )}%`;
     }
     await waitSomeSeconds( 1 );

@@ -15,8 +15,6 @@
             <p><span style="font-weight: bold;">Last block: </span><span class="last_block">loading...</span></p>
             <div class="ttnb_probability" style="width: 110px; margin: 0; text-align: center; line-height: 2rem; height: 2rem;"></div>
             <div>
-                <p><span style="font-weight: bold;">Percent of blocks found by now: </span><span class="current_percent">loading...</span></p>
-                <p><span style="font-weight: bold;">Next tier: </span><span class="ttnt">loading...</span></p>
                 <p><span style="font-weight: bold;">More info: </span><span class="tier_info">loading...</span></p>
                 <h2>What is going on?</h2>
                 <p>
@@ -67,9 +65,18 @@
           </div>
           <div class="graphs">
             <div class="progress">
+                <div class="y">
+                <p><span style="font-weight: bold;">Next tier: </span><span class="ttnt">loading...</span></p>
                     <div class="ttnb_progressOutline" >
                         <div class="ttnb_progressBar" ></div>
                     </div>
+                </div>
+                <div class="y">
+                    <p><span style="font-weight: bold;">Percent of blocks found by now: </span><span class="current_percent">loading...</span></p>
+                    <div class="total_progressOutline">
+                        <div class="total_progressBar"></div>
+                    </div>
+                </div>
                 <div class="ttnb_status"></div>
             </div>
           </div>
@@ -77,7 +84,7 @@
         <div id="myModal" class="modal" style="display: block;">
             <div class="modal-content">
               <span class="close">&times;</span>
-              <p class="mp">Will the next block ever be minted? This is a tool to help you determine how close we are to total Bitcoin network difficulty adjustment death spiral. Gird your loins and then close this window to step into the chamber and analyse this most important of on-chain information.</p>
+              <p class="mp">Will the next block ever be minted? This is a tool to help you determine how close we are to total Bitcoin network difficulty adjustment death spiral. Gird your loins and then close this window to step into the chamber and analyse this most important of on-chain information. The internal theme music will increase in intensity as the time between blocks increases.</p>
               <button id="themez">Theme Song Spaz</button>
               </br>
               </br>
