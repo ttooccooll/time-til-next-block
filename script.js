@@ -262,55 +262,55 @@ var smoothProgress = async () => {
             $( '.ttnb_probability' ).innerText = "DEFCON:1";
             $( '.ttnb_probability' ).style.backgroundColor = "#ffd500";
             $( '.ttnt' ).innerText = `${time_til_10} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is currently progressing through tier one, "Speedy" -- among the top 10% of fastest blocks.`;
+            $( '.tier_info' ).innerText = `A new block was just mined. The Bitcoin network is alive and functioning.`;
         }
         if ( findSphere( current_percent ) == 1 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:2";
             $( '.ttnb_probability' ).style.backgroundColor = "#ffb600";
             $( '.ttnt' ).innerText = `${time_til_25} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is currently progressing through tier two, "Decent" -- among the top 25% of fastest blocks.`;
+            $( '.tier_info' ).innerText = `If the current block is mined right now,it will be among the top 25% of fastest blocks.`;
         }
         if ( findSphere( current_percent ) == 2 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:3";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff9400";
             $( '.ttnt' ).innerText = `${time_til_50} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is currently progressing through tier three, "Normal" -- 50% of blocks make it past this tier and 50% do not.`;
+            $( '.tier_info' ).innerText = `The block is currently progressing at a normal rate. 50% of blocks make it past this tier and 50% do not.`;
         }
         if ( findSphere( current_percent ) == 3 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:4";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff6e00";
             $( '.ttnt' ).innerText = `${time_til_75} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is currently progressing through tier four, "Pokey." Statistically, the block should have been found by now, but a full 50% of them make it to this tier, and 25% of them even make it *beyond* this tier, so nbd.`;
+            $( '.tier_info' ).innerText = `Statistically, the block should have been found by now, but a full 50% of them make it to this tier, and 25% of them even make it *beyond* this tier.`;
         }
         if ( findSphere( current_percent ) == 4 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:5";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff3b00";
             $( '.ttnt' ).innerText = `${time_til_90} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is currently progressing through tier five, "Crawler" -- fewer than 25% of blocks are this slow.`;
+            $( '.tier_info' ).innerText = `Fewer than 25% of blocks are this slow.`;
         }
         if ( findSphere( current_percent ) == 5 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:6";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `${time_til_95} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is in tier six, "Sloth" -- only 10% of blocks are this slow.`;
+            $( '.tier_info' ).innerText = `Only 10% of blocks are this slow. Maybe it is time for a difficulty readjustment.`;
         }
         if ( findSphere( current_percent ) == 6 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:7";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `${time_til_97_5} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is in tier seven, "Tarbaby" -- I'm sorry this happened to you.`;
+            $( '.tier_info' ).innerText = `This is a remarkably slow block. Batten down the hatches!`;
         }
         if ( findSphere( current_percent ) == 7 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:8";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnb_probability' ).classList.add( "plaid" );
             $( '.ttnt' ).innerText = `${time_til_99} ${tierstring}`;
-            $( '.tier_info' ).innerText = `The block is in tier eight, "Plaid" -- the only explanation is that you are a sinner.`;
+            $( '.tier_info' ).innerText = `This is a truly elusive block.`;
         }
         if ( findSphere( current_percent ) > 7 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:9";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
-            $( '.ttnt' ).innerText = `There is no next tier, this is the last one`;
+            $( '.ttnt' ).innerText = `There is no next tier. This is the last one.`;
             $( '.ttnb_progressBar' ).style.width = `99%`;
             $( '.tier_info' ).innerText = `This may be the last block ever! Head for the hills and panic.`;
         }
@@ -352,14 +352,20 @@ var showToast = content => {
 
 document.addEventListener("DOMContentLoaded", function () {
     var modal = document.getElementById("myModal");
+    var modalz = document.getElementById("myModalz");
     var span = document.getElementsByClassName("close")[0];
+    var spanz = document.getElementsByClassName("closez")[0];
     var modalOpened = false;
     var audioMP6;
     var audioMP7;
+    var audioMP8;
 
     function playMP6() {
         if (audioMP7 && !audioMP7.paused) {
             audioMP7.pause();
+        }
+        if (audioMP8 && !audioMP8.paused) {
+            audioMP8.pause();
         }
         audioMP6 = new Audio("Create.wav");
         audioMP6.play();
@@ -381,23 +387,46 @@ document.addEventListener("DOMContentLoaded", function () {
         if (audioMP6 && !audioMP6.paused) {
             audioMP6.pause();
         }
+        if (audioMP8 && !audioMP8.paused) {
+            audioMP8.pause();
+        }
         audioMP7 = new Audio("Orion.wav");
         audioMP7.play();
     }
     
-    var button = document.getElementById("theme");
-    button.addEventListener("click", playMP6);
-    
-    var button = document.getElementById("themez");
-    button.addEventListener("click", playMP7);
+    function pauseMP8() {
+        if (audioMP8 && !audioMP8.paused) { 
+            audioMP8.pause();
+        }
+    }
+
+    function playMP8() {
+        if (audioMP6 && !audioMP6.paused) {
+            audioMP6.pause();
+        }
+        if (audioMP7 && !audioMP7.paused) {
+            audioMP7.pause();
+        }
+        audioMP8 = new Audio("Orion.wav");
+        audioMP8.play();
+    }
+
+    var buttonz = document.getElementById("themez");
+    buttonz.addEventListener("click", playMP7);
 
     window.onload = function() {
         modal.style.display = "block";
+        modalz.style.display = "block";
     }
 
     span.onclick = function() {
         pauseMP6();
-        pauseMP7();
         modal.style.display = "none";
+    }
+
+    spanz.onclick = function() {
+        pauseMP7();
+        modalz.style.display = "none";
+        playMP6();
     }
 });
