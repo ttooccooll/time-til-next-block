@@ -291,11 +291,11 @@ input {
 
 .closez {
   color: rgb(65, 65, 65);
-  font-size: 3em;
+  font-size: 8em;
   font-weight: bold;
   text-align: center;
-  opacity: .8;
-  margin-left: 20%;
+  opacity: .6;
+  margin-left: 10%;
   font-weight: 500;
 }
 
@@ -309,22 +309,22 @@ input {
     background: transparent;
     border: none;
     font-family: "m";
-    opacity: .8;
+    opacity: .6;
     color: black;
     cursor: pointer;
-    font-size: 3em;
-    margin-left: 70%;
+    font-size: 8em;
+    margin-left: 40%;
     font-weight: 500;
 }
 .escape {
     background: transparent;
     border: none;
     font-family: "m";
-    opacity: .8;
+    opacity: .6;
     color: black;
     cursor: pointer;
-    font-size: 3em;
-    margin-left: 20%;
+    font-size: 8em;
+    margin-left: 10%;
     text-decoration: none;
     font-weight: 500;
 }
