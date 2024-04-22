@@ -278,15 +278,24 @@ input {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.modalz-content {
+  margin-top: auto;
 }
 
 .closez {
-  color: black;
-  font-size: 10em;
+  color: rgb(65, 65, 65);
+  font-size: 8em;
   font-weight: bold;
   text-align: center;
   opacity: .6;
-  bottom: 10px;
+  margin-left: 10%;
+  font-weight: 500;
 }
 
 .closez:hover,
@@ -302,5 +311,19 @@ input {
     opacity: .6;
     color: black;
     cursor: pointer;
-    font-size: 10em;
+    font-size: 8em;
+    margin-left: 40%;
+    font-weight: 500;
+}
+.escape {
+    background: transparent;
+    border: none;
+    font-family: "m";
+    opacity: .6;
+    color: black;
+    cursor: pointer;
+    font-size: 8em;
+    margin-left: 10%;
+    text-decoration: none;
+    font-weight: 500;
 }
