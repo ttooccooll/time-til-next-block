@@ -1,5 +1,5 @@
 # Time til next block
-A progress bar counting milestones on the way to the next bitcoin block
+A progress bar counting milestones on the way to the next bitcoin block with an appropriate soundtrack for each tier.
 
 # What is this?
 
