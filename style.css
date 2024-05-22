@@ -456,8 +456,8 @@ input {
         width: fit-content;
         position: absolute;
         bottom: 30%;
-        left: 62%;
+        left: 35%;
         box-shadow: 0 0 5px black;
-        transform: scale(.8) translate(-50%, -50%) rotate(-90deg);
+        transform: scale(.5) translate(-50%, -50%) rotate(-90deg);
     }
 }
