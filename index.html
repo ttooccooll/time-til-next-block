@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="style.css">
         <title>Next Block Defcon Level</title>
         <script src="script.js"></script>
+        <script src="tps.js"></script>
         <script type="module" src="https://unpkg.com/metallicss@4.0.3/dist/metallicss.min.js"></script>
     </head>
     <body>
@@ -50,6 +51,11 @@
                 <p>
                     The number -1 is what you modify to calculate the tiers. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on. To get the formula to give me "round percentages" I made this javascript version: ( 1 - Math.E**(-num_of_seconds / ( 10 * 60 ) ) ) * 100 -- and I modify the variable num_of_seconds til I get a percentage like 10% or 25% or whatever I want.
                 </p>
+                <div class="loading">Loading <span class="cur_load">0</span> out of <span class="total_load"></span></div>
+                <div class="info hidden">
+                    <p>Block with the most transactions per second: <span class="most_tps"></span></p>
+                    <p>Average transactions per second in the past 24 hours: <span class="avg_tps"></span></p>
+                </div>
             </div>
             <div class="toast"></div>
           </div>
@@ -70,7 +76,14 @@
                 <div class="ttnb_status"></div>
             </div>
           </div>
-        </div>
+            <div class="graphs">
+                <div class="progress1">
+                    <p class="ex"><span class="num_big"></span> blocks in the past 24 hours had more than 7 transactions per second:</p>
+                    <ol class="big_blocks"></ol>
+                    <button id="refreshButton">Refresh TPS Data</button>
+                </div>
+            </div>
+        </div>    
         <div id="myModal" class="modal" style="display: block;">
             <div class="modal-content">
             </br>
@@ -93,13 +106,13 @@
             </br>
             <button id="themez">Theme</button>
             </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        <a class="escape" href="https://dashboard.clarkmoody.com/" target="_blank">Escape</a>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            <a class="escape" href="https://dashboard.clarkmoody.com/" target="_blank">Escape</a>
             </div>
           </div>
     </body>

@@ -268,7 +268,7 @@ var smoothProgress = async () => {
             $( '.ttnb_probability' ).innerText = "DEFCON:2";
             $( '.ttnb_probability' ).style.backgroundColor = "#ffb600";
             $( '.ttnt' ).innerText = `${time_til_25} ${tierstring}`;
-            $( '.tier_info' ).innerText = `If the current block is mined right now,it will be among the top 25% of fastest blocks.`;
+            $( '.tier_info' ).innerText = `If the current block is mined right now, it will be among the top 25% of fastest blocks.`;
         }
         if ( findSphere( current_percent ) == 2 ) {
             $( '.ttnb_probability' ).innerText = "DEFCON:3";
@@ -392,23 +392,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         audioMP7 = new Audio("Orion.wav");
         audioMP7.play();
-    }
-    
-    function pauseMP8() {
-        if (audioMP8 && !audioMP8.paused) { 
-            audioMP8.pause();
-        }
-    }
-
-    function playMP8() {
-        if (audioMP6 && !audioMP6.paused) {
-            audioMP6.pause();
-        }
-        if (audioMP7 && !audioMP7.paused) {
-            audioMP7.pause();
-        }
-        audioMP8 = new Audio("Orion.wav");
-        audioMP8.play();
     }
 
     var buttonz = document.getElementById("themez");
