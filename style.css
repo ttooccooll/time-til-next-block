@@ -449,6 +449,12 @@ input {
     .everything {
         padding: 2px;
     }
+    h1 {
+        font-size: 1.5rem;
+    }
+    h2 {
+        font-size: 1rem;
+    }
     .words {
         margin-left: 0;
         flex-basis: 7%;
