@@ -422,6 +422,10 @@ input {
     .close {
         font-size: small;
     }
+    .big_blocks {
+        width: 5%;
+        font-family: 'Courier New', Courier, monospace;
+    }
 }
 
 @media (max-width: 800px) {
