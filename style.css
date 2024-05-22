@@ -373,10 +373,15 @@ input {
     width: fit-content;
     height: 80%;
     min-width: 6em;
+    overflow-x: scroll;
+}
+
+.big_blocks::-webkit-scrollbar {
+    display: none;
 }
 
 .big_blocks a {
-    color: limegreen;
+    color: rgb(49, 163, 49);
     font-family: "MyFont2";
 }
 
@@ -421,6 +426,7 @@ input {
     }
     .close {
         font-size: small;
+        margin-bottom: 10px;
     }
     .big_blocks {
         width: 5%;
