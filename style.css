@@ -461,7 +461,7 @@ input {
     .words {
         margin-left: 0;
         flex-basis: 7%;
-        font-size: small;
+        font-size: x-small;
     }
     .progress {
         display: flex;
