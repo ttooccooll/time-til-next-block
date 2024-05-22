@@ -51,11 +51,6 @@
                 <p>
                     The number -1 is what you modify to calculate the tiers. -1 means a period of 10 minutes. -2 means a period of 20 minutes, and so on. It also works for decimals: -0.4 means a period of 4 minutes, -0.5 means a period of 5 minutes, and so on. To get the formula to give me "round percentages" I made this javascript version: ( 1 - Math.E**(-num_of_seconds / ( 10 * 60 ) ) ) * 100 -- and I modify the variable num_of_seconds til I get a percentage like 10% or 25% or whatever I want.
                 </p>
-                <div class="loading">Loading <span class="cur_load">0</span> out of <span class="total_load"></span></div>
-                <div class="info hidden">
-                    <p>Block with the most transactions per second: <span class="most_tps"></span></p>
-                    <p>Average transactions per second in the past 24 hours: <span class="avg_tps"></span></p>
-                </div>
             </div>
             <div class="toast"></div>
           </div>
@@ -81,6 +76,9 @@
                     <p class="ex"><span class="num_big"></span> blocks in the past 24 hours had more than 7 transactions per second:</p>
                     <ol class="big_blocks"></ol>
                     <button id="refreshButton">Refresh TPS Data</button>
+                    <p class="ex">Loading <span class="cur_load">0</span> out of <span class="total_load"></span></p>
+                    <p class="ex">Block with the most transactions per second: <span class="most_tps"></span></p>
+                    <p class="ex">Average transactions per second in the past 24 hours: <span class="avg_tps"></span></p>
                 </div>
             </div>
         </div>    
