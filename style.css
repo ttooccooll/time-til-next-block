@@ -446,6 +446,14 @@ input {
 }
 
 @media (max-width: 500px) {
+    .everything {
+        padding: 2px;
+    }
+    .words {
+        margin-left: 0;
+        flex-basis: 7%;
+        font-size: small;
+    }
     .progress {
         display: flex;
         flex-direction: row;
