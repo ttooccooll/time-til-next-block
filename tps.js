@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tip = Number(tip);
     var i;
     for (i = tip - num; i < tip; i++) {
-      await delay(200); // Adding delay between requests
+      await delay(200);
       try {
         var hash = await getData(`https://${source}/api/block-height/${i}`);
       } catch (e) {

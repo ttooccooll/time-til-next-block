@@ -112,6 +112,14 @@ input {
     flex-basis: 40%;
     margin-right: 2%;
 }
+.words1 {
+    margin-top: 10px;
+    border: 5px black;
+    padding: 1rem;
+    border-style: ridge;
+    background: linear-gradient(49deg, #496E7A, #77A2B2, #4A7482, #B3DCEA, #4D7582);
+    box-shadow: 0 0 5px black;
+}
 .graphs {
     width: fit-content;
 }
@@ -384,6 +392,28 @@ input {
     font-family: "MyFont2";
 }
 
+.tier {
+    border: 7px ridge black;
+    border-radius: 25px; overflow: hidden;
+    border-style: ridge;
+    font-family: "MyFont2";
+    color: limegreen;
+    font-size: xx-small;
+    background: rgb(15, 22, 13);
+    text-shadow: 
+        0 0 12px #006400,
+        0 0 5px #5E9A0A,
+        0 0 7px #1F4F2A,
+        0 0 5px #006B3C;
+    box-shadow: 
+        0 0 5px black,
+        inset 0 0 12px #006400,
+        inset 0 0 5px #5E9A0A,
+        inset 0 0 7px #1F4F2A,
+        inset 0 0 5px #006B3C;
+    padding: 5% 5% 5% 5%;
+}
+
 @media (max-width: 1174px) {
     .closez {
         color: rgb(31, 31, 31);
@@ -427,7 +457,7 @@ input {
         font-size: small;
         margin-bottom: 10px;
     }
-    .big_blocks {
+    .big_blocks .tier {
         padding: 5% 0 5% 20%;
         width: 60%;
     }
@@ -445,7 +475,7 @@ input {
         font-size: x-small;
         padding: 1px;
     }
-    .big_blocks {
+    .big_blocks .tier {
         font-family: monospace;
     }
     .big_blocks a {
