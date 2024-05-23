@@ -329,7 +329,7 @@ input {
     cursor: crosshair;
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(-49deg, #7a4949, #b27777, #824a4a, #eab3b3, #824d4d);
+    background: linear-gradient(-49deg, #924242, #cb6767, #af2e2e, #f48f8f, #963e3e);
     margin: 2px;
     padding-top: 2px;
     font-family: "m";
@@ -455,10 +455,11 @@ input {
 
 @media (max-width: 500px) {
     .everything {
-        padding: 2px;
+        padding: 1px;
     }
     h1 {
-        font-size: 1rem;
+        font-size: .8rem;
+        margin-top: 0;
     }
     h2 {
         font-size: .5rem;
@@ -469,7 +470,7 @@ input {
         font-size: x-small;
     }
     .progress1 {
-        transform: scale(.5);
+        transform: scale(.7);
     }
     .progress {
         display: flex;
@@ -481,7 +482,7 @@ input {
         width: fit-content;
         position: absolute;
         bottom: 20%;
-        left: 20%;
+        left: 10%;
         box-shadow: 0 0 5px black;
         transform: scale(.5) translate(-50%, -50%) rotate(-90deg);
     }
