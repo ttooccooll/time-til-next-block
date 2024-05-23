@@ -341,6 +341,11 @@ input {
     margin: 2px;
     padding-top: 2px;
     font-family: "m";
+    color: black;
+}
+
+#refreshButton:active {
+    color: black;
 }
 
 .progress1 {
