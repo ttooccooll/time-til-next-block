@@ -370,7 +370,7 @@ input {
         inset 0 0 5px #006B3C;
     margin: 5px;
     padding: 10% 10% 10% 20%;
-    width: fit-content;
+    width: 60%;
     height: 80%;
     overflow-y: scroll;
 }
@@ -458,7 +458,7 @@ input {
         padding: 0;
     }
     h1 {
-        font-size: .8rem;
+        font-size: .6rem;
         margin-top: 0;
     }
     h2 {
@@ -467,14 +467,16 @@ input {
     .words {
         margin-top: -20px;
         margin-left: -10px;
-        flex-basis: 7%;
-        font-size: x-small;
+        width: 29vw;
+        font-size: xx-small;
+    }
+    .words p {
+        padding: 1px;
     }
     .progress1 {
-        margin-top: -50px;
-        margin-left: -20px;
-        height: 130vh;
-        transform: scale(.93);
+        margin-top: -30px;
+        height: 120vh;
+        width: 29vw;
     }
     .progress {
         display: flex;
@@ -487,8 +489,15 @@ input {
         position: absolute;
         bottom: 30%;
         left: 0;
-        margin-left: -20px;
+        margin-left: -55px;
         box-shadow: 0 0 5px black;
         transform: scale(.4) translate(-50%, -50%) rotate(-90deg);
+    }
+    .ttnb_prbability {
+        transform: scale(.8);
+    }
+    .mp {
+        font-size: small;
+        width: 80%;
     }
 }
