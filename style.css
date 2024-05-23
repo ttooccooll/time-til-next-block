@@ -485,10 +485,14 @@ input {
         font-family: monospace;
     }
     .tier {
+        padding: 8%;
         font-family: monospace;
     }
+    .words1 {
+        padding-left: 5%;
+    }
     .ttnb_probability {
-        transform: scale(.6)
+        width: 90% !important;
     }
 }
 
@@ -531,9 +535,6 @@ input {
         margin-left: -25px;
         box-shadow: 0 0 5px black;
         transform: scale(.4) translate(-50%, -50%) rotate(-90deg);
-    }
-    .ttnb_prbability {
-        transform: scale(.8);
     }
     .mp {
         font-size: small;
