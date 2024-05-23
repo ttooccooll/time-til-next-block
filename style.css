@@ -472,9 +472,9 @@ input {
     }
     .progress1 {
         margin-top: -50px;
-        margin-left: -15px;
+        margin-left: -20px;
         height: 130vh;
-        transform: scale(.95);
+        transform: scale(.93);
     }
     .progress {
         display: flex;
