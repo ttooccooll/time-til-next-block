@@ -465,15 +465,15 @@ input {
         font-size: .5rem;
     }
     .words {
+        margin-top: -20px;
         margin-left: -10px;
         flex-basis: 7%;
         font-size: x-small;
     }
     .progress1 {
         margin-top: -50px;
-        margin-left: -10px;
+        margin-left: -20px;
         height: 130vh;
-        transform: scale(.9);
     }
     .progress {
         display: flex;
