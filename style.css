@@ -470,7 +470,9 @@ input {
         font-size: x-small;
     }
     .progress1 {
-        margin-left: -20px;
+        margin-top: -40px;
+        margin-left: -18px;
+        height: 130vh;
         transform: scale(.7);
     }
     .progress {
