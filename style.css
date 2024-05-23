@@ -231,7 +231,7 @@ input {
 .close {
     border: 5px black;
     border-style: ridge;
-    background: linear-gradient(-49deg, #7a4949, #b27777, #824a4a, #eab3b3, #824d4d);
+    background: linear-gradient(-49deg, #924242, #cb6767, #af2e2e, #f48f8f, #963e3e);
     font-family: "m";
     color: black;
   font-size: 28px;
@@ -455,7 +455,7 @@ input {
 
 @media (max-width: 500px) {
     .everything {
-        padding: 1px;
+        padding: 0;
     }
     h1 {
         font-size: .8rem;
@@ -465,11 +465,12 @@ input {
         font-size: .5rem;
     }
     .words {
-        margin-left: 0;
+        margin-left: -10px;
         flex-basis: 7%;
         font-size: x-small;
     }
     .progress1 {
+        margin-left: -20px;
         transform: scale(.7);
     }
     .progress {
