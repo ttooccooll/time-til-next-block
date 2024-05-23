@@ -513,7 +513,7 @@ input {
         width: 29vw;
         font-size: xx-small;
     }
-    .words p {
+    .words p h1 h2 {
         padding: 1px;
     }
     .progress1 {
