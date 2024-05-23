@@ -430,10 +430,9 @@ input {
     .big_blocks {
         padding: 5% 0 5% 20%;
         width: 60%;
-        font-family: monospace;
     }
-    .big_blocks a {
-        font-family: monospace;
+    .progress1 {
+        width: 20vw;
     }
 }
 
@@ -445,6 +444,12 @@ input {
     .ex {
         font-size: x-small;
         padding: 1px;
+    }
+    .big_blocks {
+        font-family: monospace;
+    }
+    .big_blocks a {
+        font-family: monospace;
     }
 }
 
@@ -462,6 +467,9 @@ input {
         margin-left: 0;
         flex-basis: 7%;
         font-size: x-small;
+    }
+    .progress1 {
+        transform: scale(.5);
     }
     .progress {
         display: flex;
