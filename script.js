@@ -229,7 +229,7 @@ var timeTilNextBlock = async () => {
     if ( yay ) time_since_last_block = 0;
     if ( yay ) sessionStorage.lb_timestamp = now;
     first_time = false;
-    await waitSomeSeconds( 1 );
+    await waitSomeSeconds( 10 );
     timeTilNextBlock();
 }
 timeTilNextBlock();
