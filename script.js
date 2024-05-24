@@ -259,25 +259,25 @@ var smoothProgress = async () => {
         var tierstring = "seconds";
         if ( findSphere( current_percent ) < 5 && time_til.endsWith( " 1" ) || time_til == "1" ) tierstring = "second";
         if ( findSphere( current_percent ) == 0 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:1";
+            $( '.ttnb_probability' ).innerText = "DEFCON:9";
             $( '.ttnb_probability' ).style.backgroundColor = "#ffd500";
             $( '.ttnt' ).innerText = `${time_til_10} ${tierstring}`;
             $( '.tier_info' ).innerText = `A new block was just mined. The Bitcoin network is alive and functioning.`;
         }
         if ( findSphere( current_percent ) == 1 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:2";
+            $( '.ttnb_probability' ).innerText = "DEFCON:8";
             $( '.ttnb_probability' ).style.backgroundColor = "#ffb600";
             $( '.ttnt' ).innerText = `${time_til_25} ${tierstring}`;
             $( '.tier_info' ).innerText = `If the current block is mined right now, it will be among the top 25% of fastest blocks.`;
         }
         if ( findSphere( current_percent ) == 2 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:3";
+            $( '.ttnb_probability' ).innerText = "DEFCON:7";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff9400";
             $( '.ttnt' ).innerText = `${time_til_50} ${tierstring}`;
             $( '.tier_info' ).innerText = `The block is currently progressing at a normal rate. 50% of blocks make it past this tier and 50% do not.`;
         }
         if ( findSphere( current_percent ) == 3 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:4";
+            $( '.ttnb_probability' ).innerText = "DEFCON:6";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff6e00";
             $( '.ttnt' ).innerText = `${time_til_75} ${tierstring}`;
             $( '.tier_info' ).innerText = `Statistically, the block should have been found by now, but a full 50% of them make it to this tier, and 25% of them even make it *beyond* this tier.`;
@@ -289,26 +289,26 @@ var smoothProgress = async () => {
             $( '.tier_info' ).innerText = `Fewer than 25% of blocks are this slow.`;
         }
         if ( findSphere( current_percent ) == 5 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:6";
+            $( '.ttnb_probability' ).innerText = "DEFCON:4";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `${time_til_95} ${tierstring}`;
             $( '.tier_info' ).innerText = `Only 10% of blocks are this slow. Maybe it is time for a difficulty readjustment.`;
         }
         if ( findSphere( current_percent ) == 6 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:7";
+            $( '.ttnb_probability' ).innerText = "DEFCON:3";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `${time_til_97_5} ${tierstring}`;
             $( '.tier_info' ).innerText = `This is a remarkably slow block. Batten down the hatches!`;
         }
         if ( findSphere( current_percent ) == 7 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:8";
+            $( '.ttnb_probability' ).innerText = "DEFCON:2";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnb_probability' ).classList.add( "plaid" );
             $( '.ttnt' ).innerText = `${time_til_99} ${tierstring}`;
             $( '.tier_info' ).innerText = `This is a truly elusive block.`;
         }
         if ( findSphere( current_percent ) > 7 ) {
-            $( '.ttnb_probability' ).innerText = "DEFCON:9";
+            $( '.ttnb_probability' ).innerText = "DEFCON:1";
             $( '.ttnb_probability' ).style.backgroundColor = "#ff0000";
             $( '.ttnt' ).innerText = `There is no next tier. This is the last one.`;
             $( '.ttnb_progressBar' ).style.width = `99%`;
